@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied & Engineering Mathematics Practice</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            justify-content: space-between;
+        }
+        .control-group {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+        label.control-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        select, button {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button.primary-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        button.primary-btn:hover { background: #2980b9; }
+        
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border-left: 5px solid #3498db;
+        }
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .bilingual-en { font-weight: bold; color: #2c3e50; }
+        .bilingual-gu { color: #555; font-size: 0.95em; margin-top: 5px; margin-bottom: 15px;}
+        
+        .options {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        @media(max-width: 600px) { .options { grid-template-columns: 1fr; } }
+        
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover { background: #f0f4f8; }
+        .options input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
+        
+        .solution {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            font-size: 0.95em;
+        }
+        .solution-correct { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .solution-incorrect { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        
+        #submit-btn { display: none; width: 100%; font-size: 1.2em; padding: 15px; margin-top: 20px; }
+        #score-display { display: none; font-size: 1.5em; font-weight: bold; text-align: center; margin-bottom: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>GTU Mathematics Practice Generator</h1>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label class="control-label" for="topicSelect">1. Select Topic (ટોપિક પસંદ કરો):</label>
+            <select id="topicSelect">
+                <option value="matrix">1. Matrices (શ્રેણિક)</option>
+                <option value="differentiation">2. Differentiation (વિકલન)</option>
+                <option value="integration">3. Integration (સંકલન)</option>
+                <option value="diffeq">4. Differential Equations (વિકલ સમીકરણો)</option>
+                <option value="complex">5. Complex Numbers (સંકર સંખ્યાઓ)</option>
+                <option value="statistics">6. Statistics (આંકડાશાસ્ત્ર)</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="typeSelect">2. Practice Type (પ્રેક્ટિસ પ્રકાર):</label>
+            <select id="typeSelect">
+                <option value="mcq">MCQ type blanks (30 Questions)</option>
+                <option value="examples">Examples (6 Examples)</option>
+            </select>
+        </div>
+        <div class="control-group" style="justify-content: flex-end;">
+            <button class="primary-btn" onclick="generateQuiz()">Generate Practice Session</button>
+        </div>
+    </div>
+
+    <div id="score-display"></div>
+    <form id="quiz-form"></form>
+    <button type="button" class="primary-btn" id="submit-btn" onclick="gradeQuiz()">Submit & View Solutions</button>
+</div>
+
+<script>
+    // --- UTILITY FUNCTIONS ---
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    // --- GENERATION ENGINE (Based on PDF Methods) ---
+    const generators = {
+        "matrix": {
+            "mcq": [
+                () => { // Order of matrix
+                    let r1 = rand(1, 4), c1 = rand(1, 4), r2 = c1, c2 = rand(1, 4);
+                    return {
+                        en: `If $A$ is a $${r1} \\times ${c1}$ matrix and $B$ is a $${r2} \\times ${c2}$ matrix, what is the order of matrix $AB$?`,
+                        gu: `જો $A$ એ $${r1} \\times ${c1}$ શ્રેણિક હોય અને $B$ એ $${r2} \\times ${c2}$ શ્રેણિક હોય, તો શ્રેણિક $AB$ ની કક્ષા શું છે?`,
+                        correct: `$${r1} \\times ${c2}$`,
+                        distractors: [`$${c1} \\times ${r1}$`, `$${c1} \\times ${c2}$`, `Not possible (શક્ય નથી)`],
+                        solEn: `The order of multiplication $A_{m \\times n} B_{n \\times p}$ is $m \\times p$. Therefore, $${r1} \\times ${c2}$.`,
+                        solGu: `ગુણાકાર $A_{m \\times n} B_{n \\times p}$ ની કક્ષા $m \\times p$ થાય. તેથી, $${r1} \\times ${c2}$.`
+                    };
+                },
+                () => { // Adjoint of 2x2
+                    let a = rand(-5, 5), b = rand(-5, 5), c = rand(-5, 5), d = rand(-5, 5);
+                    return {
+                        en: `If $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$, then $\\text{adj}(A) =$ ?`,
+                        gu: `જો $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ હોય, તો $adj(A) =$ ?`,
+                        correct: `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`,
+                        distractors: [
+                            `$\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`,
+                            `$\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`,
+                            `$\\begin{bmatrix} ${-d} & ${b} \\\\ ${c} & ${-a} \\end{bmatrix}$`
+                        ],
+                        solEn: `For a 2x2 matrix, swap the main diagonal elements and change the signs of the off-diagonal elements.`,
+                        solGu: `2x2 શ્રેણિક માટે, મુખ્ય વિકર્ણના ઘટકોની અદલાબદલી કરો અને અન્ય ઘટકોના ચિહ્નો બદલો.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Solve 2A + X = 3B
+                    let a1 = rand(1,4), a2 = rand(1,4), a3 = rand(1,4), a4 = rand(1,4);
+                    let b1 = rand(1,4), b2 = rand(1,4), b3 = rand(1,4), b4 = rand(1,4);
+                    let x1 = 3*b1 - 2*a1, x2 = 3*b2 - 2*a2, x3 = 3*b3 - 2*a3, x4 = 3*b4 - 2*a4;
+                    return {
+                        en: `Find matrix $X$ if $2A + X = 3B$, where $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$.`,
+                        gu: `જો સમીકરણ $2A + X = 3B$ હોય, જ્યાં $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ અને $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$ હોય, તો શ્રેણિક $X$ શોધો.`,
+                        correct: `$\\begin{bmatrix} ${x1} & ${x2} \\\\ ${x3} & ${x4} \\end{bmatrix}$`,
+                        distractors: [
+                            `$\\begin{bmatrix} ${x1+1} & ${x2} \\\\ ${x3} & ${x4-1} \\end{bmatrix}$`,
+                            `$\\begin{bmatrix} ${x1-2} & ${x2} \\\\ ${x3+2} & ${x4} \\end{bmatrix}$`,
+                            `$\\begin{bmatrix} ${-x1} & ${-x2} \\\\ ${-x3} & ${-x4} \\end{bmatrix}$`
+                        ],
+                        solEn: `$X = 3B - 2A$. Compute $3B$ and subtract $2A$ element by element.`,
+                        solGu: `$X = 3B - 2A$. $3B$ ની ગણતરી કરો અને તેમાંથી $2A$ બાદ કરો.`
+                    };
+                }
+            ]
+        },
+        "differentiation": {
+            "mcq": [
+                () => { // Basic d/dx (x^n)
+                    let n = rand(3, 9);
+                    return {
+                        en: `$\\frac{d}{dx}(x^{${n}}) = $ ?`,
+                        gu: `$\\frac{d}{dx}(x^{${n}}) = $ ?`,
+                        correct: `$${n}x^{${n-1}}$`,
+                        distractors: [`$${n}x^{${n}}$`, `$\\frac{x^{${n+1}}}{${n+1}}$`, `$x^{${n-1}}$`],
+                        solEn: `Using the power rule: $\\frac{d}{dx}(x^n) = n x^{n-1}$.`,
+                        solGu: `ઘાતના નિયમ મુજબ: $\\frac{d}{dx}(x^n) = n x^{n-1}$.`
+                    };
+                },
+                () => { // d/dx (a^x)
+                    let a = rand(2, 7);
+                    return {
+                        en: `$\\frac{d}{dx}(${a}^x) = $ ?`,
+                        gu: `$\\frac{d}{dx}(${a}^x) = $ ?`,
+                        correct: `$${a}^x \\log_e ${a}$`,
+                        distractors: [`$x \\cdot ${a}^{x-1}$`, `$${a}^x$`, `$\\frac{${a}^x}{\\log_e ${a}}$`],
+                        solEn: `Standard derivative formula: $\\frac{d}{dx}(a^x) = a^x \\log_e a$.`,
+                        solGu: `પ્રમાણિત વિકલન સૂત્ર: $\\frac{d}{dx}(a^x) = a^x \\log_e a$.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Velocity example
+                    let a = rand(1, 3), b = rand(2, 6), t = rand(2, 4);
+                    let v = 3*a*t*t - 2*b*t;
+                    return {
+                        en: `The motion of a particle is given by $S = ${a}t^3 - ${b}t^2$. Find the velocity at $t = ${t}$ sec.`,
+                        gu: `એક કણની ગતિનું સમીકરણ $S = ${a}t^3 - ${b}t^2$ છે. $t = ${t}$ સેકન્ડે તેનો વેગ શોધો.`,
+                        correct: `$${v}$ unit/sec`,
+                        distractors: [`$${v+rand(2,5)}$ unit/sec`, `$${v-rand(2,5)}$ unit/sec`, `$${v*2}$ unit/sec`],
+                        solEn: `Velocity $V = \\frac{dS}{dt} = ${3*a}t^2 - ${2*b}t$. Substitute $t=${t}$ to get $${v}$.`,
+                        solGu: `વેગ $V = \\frac{dS}{dt} = ${3*a}t^2 - ${2*b}t$. $t=${t}$ મુકતા જવાબ $${v}$ મળે છે.`
+                    };
+                }
+            ]
+        },
+        "integration": {
+            "mcq": [
+                () => { // Definite integral x^3
+                    let a = rand(1, 3);
+                    return {
+                        en: `$\\int_{-${a}}^{${a}} x^3 dx = $ ?`,
+                        gu: `$\\int_{-${a}}^{${a}} x^3 dx = $ ?`,
+                        correct: `$0$`,
+                        distractors: [`$\\frac{${Math.pow(a, 4)}}{2}$`, `$${Math.pow(a, 4)}$`, `$-\\frac{${Math.pow(a, 4)}}{4}$`],
+                        solEn: `$x^3$ is an odd function. The integral of an odd function from $-a$ to $a$ is always $0$.`,
+                        solGu: `$x^3$ એ અયુગ્મ વિધેય છે. $-a$ થી $a$ સુધી અયુગ્મ વિધેયનું સંકલન હંમેશા 0 થાય છે.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Area under curve x^2
+                    let a = rand(1, 2), b = rand(3, 4);
+                    let ansNum = Math.pow(b, 3) - Math.pow(a, 3);
+                    return {
+                        en: `Find the area of the region bounded by curve $y = x^2$, the X-axis, and lines $x = ${a}, x = ${b}$.`,
+                        gu: `વક્ર $y = x^2$, રેખાઓ $x = ${a}, x = ${b}$ અને X-અક્ષ વડે આવૃત પ્રદેશ નું ક્ષેત્રફળ શોધો.`,
+                        correct: `$\\frac{${ansNum}}{3}$`,
+                        distractors: [`$\\frac{${ansNum+2}}{3}$`, `$\\frac{${ansNum-1}}{2}$`, `$${ansNum}$`],
+                        solEn: `Area $= \\int_{${a}}^{${b}} x^2 dx = [\\frac{x^3}{3}]_{${a}}^{${b}} = \\frac{${b}^3}{3} - \\frac{${a}^3}{3} = \\frac{${ansNum}}{3}$.`,
+                        solGu: `ક્ષેત્રફળ $= \\int_{${a}}^{${b}} x^2 dx = [\\frac{x^3}{3}]_{${a}}^{${b}} = \\frac{${b}^3}{3} - \\frac{${a}^3}{3} = \\frac{${ansNum}}{3}$.`
+                    };
+                }
+            ]
+        },
+        "diffeq": {
+            "mcq": [
+                () => { // Order of DE
+                    let o1 = rand(2, 4), p1 = rand(2, 5), o2 = o1 - 1, p2 = p1 + 2;
+                    return {
+                        en: `The order of the differential equation $\\left(\\frac{d^{${o1}}y}{dx^{${o1}}}\\right)^{${p1}} + \\left(\\frac{d^{${o2}}y}{dx^{${o2}}}\\right)^{${p2}} = 0$ is:`,
+                        gu: `વિકલ સમીકરણ $\\left(\\frac{d^{${o1}}y}{dx^{${o1}}}\\right)^{${p1}} + \\left(\\frac{d^{${o2}}y}{dx^{${o2}}}\\right)^{${p2}} = 0$ ની કક્ષા શું છે?`,
+                        correct: `$${o1}$`,
+                        distractors: [`$${p1}$`, `$${p2}$`, `$${o2}$`],
+                        solEn: `Order is the highest derivative present in the equation, which is $\\frac{d^{${o1}}y}{dx^{${o1}}}$.`,
+                        solGu: `કક્ષા એ સમીકરણમાં રહેલ મહત્તમ વિકલન છે, જે $\\frac{d^{${o1}}y}{dx^{${o1}}}$ છે.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Integrating Factor
+                    let k = rand(2, 5);
+                    return {
+                        en: `Find the Integrating Factor (I.F.) for the differential equation $\\frac{dy}{dx} + ${k}y = e^x$.`,
+                        gu: `વિકલ સમીકરણ $\\frac{dy}{dx} + ${k}y = e^x$ નું સંકલ્યકારક અવયવ (I.F.) શોધો.`,
+                        correct: `$e^{${k}x}$`,
+                        distractors: [`$e^{x}$`, `$e^{-${k}x}$`, `$${k}e^x$`],
+                        solEn: `Compare with $\\frac{dy}{dx} + Py = Q$. $P = ${k}$. I.F. $= e^{\\int P dx} = e^{\\int ${k} dx} = e^{${k}x}$.`,
+                        solGu: `$\\frac{dy}{dx} + Py = Q$ સાથે સરખાવતા $P = ${k}$. I.F. $= e^{\\int P dx} = e^{\\int ${k} dx} = e^{${k}x}$.`
+                    };
+                }
+            ]
+        },
+        "complex": {
+            "mcq": [
+                () => { // Powers of i
+                    let n = rand(1, 10);
+                    let power = 4 * n + 2;
+                    return {
+                        en: `$i^{${power}} = $ ?`,
+                        gu: `$i^{${power}} = $ ?`,
+                        correct: `$-1$`,
+                        distractors: [`$1$`, `$i$`, `$-i$`],
+                        solEn: `$i^{${power}} = i^{4 \\times ${n} + 2} = (i^4)^{${n}} \\cdot i^2 = (1) \\cdot (-1) = -1$.`,
+                        solGu: `$i^{${power}} = i^{4 \\times ${n} + 2} = (i^4)^{${n}} \\cdot i^2 = (1) \\cdot (-1) = -1$.`
+                    };
+                },
+                () => { // Conjugate
+                    let a = rand(2, 8), b = rand(2, 8);
+                    return {
+                        en: `If $z = ${a} - ${b}i$, then $\\overline{z} = $ ?`,
+                        gu: `જો $z = ${a} - ${b}i$ હોય, તો $\\overline{z} = $ ?`,
+                        correct: `$${a} + ${b}i$`,
+                        distractors: [`$-${a} - ${b}i$`, `$-${a} + ${b}i$`, `$${a} - ${b}i$`],
+                        solEn: `The conjugate $\\overline{z}$ changes the sign of the imaginary part.`,
+                        solGu: `અનુબદ્ધ સંકર સંખ્યા $\\overline{z}$ માટે કાલ્પનિક ભાગનું ચિહ્ન બદલાય છે.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Modulus
+                    let a = rand(3, 6), b = rand(4, 8);
+                    let mod = Math.sqrt(a*a + b*b).toFixed(2);
+                    return {
+                        en: `Find the modulus of $z = ${a} + ${b}i$.`,
+                        gu: `સંકર સંખ્યા $z = ${a} + ${b}i$ નો માનાંક શોધો.`,
+                        correct: `$\\sqrt{${a*a + b*b}}$`,
+                        distractors: [`$\\sqrt{${a*a - b*b}}$`, `$${a+b}$`, `$${a*a + b*b}$`],
+                        solEn: `Modulus $|z| = \\sqrt{a^2 + b^2} = \\sqrt{${a}^2 + ${b}^2} = \\sqrt{${a*a + b*b}}$.`,
+                        solGu: `માનાંક $|z| = \\sqrt{a^2 + b^2} = \\sqrt{${a}^2 + ${b}^2} = \\sqrt{${a*a + b*b}}$.`
+                    };
+                }
+            ]
+        },
+        "statistics": {
+            "mcq": [
+                () => { // Mean of first n natural numbers
+                    let n = rand(5, 11);
+                    return {
+                        en: `The mean of the first ${n} natural numbers is:`,
+                        gu: `પ્રથમ ${n} પ્રાકૃતિક સંખ્યાઓનો મધ્યક શું છે?`,
+                        correct: `$${(n+1)/2}$`,
+                        distractors: [`$${n/2}$`, `$${n}$`, `$${(n+2)/2}$`],
+                        solEn: `Mean of first $n$ natural numbers $= \\frac{n+1}{2} = \\frac{${n}+1}{2} = ${(n+1)/2}$.`,
+                        solGu: `પ્રથમ $n$ પ્રાકૃતિક સંખ્યાઓનો મધ્યક $= \\frac{n+1}{2} = \\frac{${n}+1}{2} = ${(n+1)/2}$.`
+                    };
+                }
+            ],
+            "examples": [
+                () => { // Find missing number given mean
+                    let n1 = rand(5, 10), n2 = rand(5, 10), n3 = rand(5, 10), n4 = rand(5, 10);
+                    let mean = rand(6, 12);
+                    let missing = (mean * 5) - (n1 + n2 + n3 + n4);
+                    return {
+                        en: `If the mean of ${n1}, ${n2}, ${n3}, $a$, and ${n4} is ${mean}, then $a = $ ?`,
+                        gu: `જો અવલોકનો ${n1}, ${n2}, ${n3}, $a$, અને ${n4} નો મધ્યક ${mean} હોય, તો $a = $ ?`,
+                        correct: `$${missing}$`,
+                        distractors: [`$${missing + rand(1,3)}$`, `$${missing - rand(1,3)}$`, `$${mean}$`],
+                        solEn: `Sum of numbers $= 5 \\times \\text{Mean} = 5 \\times ${mean} = ${mean*5}$. Thus, $a = ${mean*5} - (${n1}+${n2}+${n3}+${n4}) = ${missing}$.`,
+                        solGu: `અવલોકનોનો સરવાળો $= 5 \\times \\text{મધ્યક} = 5 \\times ${mean} = ${mean*5}$. તેથી, $a = ${mean*5} - (${n1}+${n2}+${n3}+${n4}) = ${missing}$.`
+                    };
+                }
+            ]
+        }
+    };
+
+    let currentQuizData = [];
+
+    function generateQuiz() {
+        const topic = document.getElementById('topicSelect').value;
+        const type = document.getElementById('typeSelect').value;
+        const form = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const scoreDisplay = document.getElementById('score-display');
+        
+        form.innerHTML = '';
+        scoreDisplay.style.display = 'none';
+        currentQuizData = [];
+
+        const numQuestions = type === 'mcq' ? 30 : 6;
+        const availableGenerators = generators[topic][type] || generators[topic]['mcq']; 
+
+        for (let i = 0; i < numQuestions; i++) {
+            // Pick a random template from the available generators for this topic/type
+            const genFunc = availableGenerators[i % availableGenerators.length];
+            const qData = genFunc();
+
+            // Shuffle options
+            let options = [{text: qData.correct, isCorrect: true}];
+            qData.distractors.forEach(d => options.push({text: d, isCorrect: false}));
+            options = shuffle(options);
+            qData.shuffledOptions = options;
+
+            currentQuizData.push(qData);
+
+            // Create DOM elements
+            const qBlock = document.createElement('div');
+            qBlock.className = 'question-block';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerHTML = `
+                <div class="bilingual-en">Q${i+1}. ${qData.en}</div>
+                <div class="bilingual-gu">પ્રશ્ન ${i+1}. ${qData.gu}</div>
+            `;
+            qBlock.appendChild(qText);
+
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options';
+            
+            options.forEach((opt, optIndex) => {
+                const li = document.createElement('li');
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                
+                input.type = 'radio';
+                input.name = `q${i}`;
+                input.value = opt.isCorrect ? 'correct' : 'incorrect';
+                
+                label.appendChild(input);
+                label.innerHTML += opt.text;
+                li.appendChild(label);
+                optionsList.appendChild(li);
+            });
+            qBlock.appendChild(optionsList);
+
+            const solutionDiv = document.createElement('div');
+            solutionDiv.id = `solution-${i}`;
+            solutionDiv.className = 'solution';
+            qBlock.appendChild(solutionDiv);
+
+            form.appendChild(qBlock);
+        }
+
+        submitBtn.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "Submit & View Solutions";
+        
+        // Re-render MathJax
+        MathJax.typesetPromise([form]);
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        let answeredAll = true;
+
+        currentQuizData.forEach((_, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (!selected) answeredAll = false;
+        });
+
+        if (!answeredAll) {
+            alert("Please answer all questions before submitting. (કૃપા કરીને સબમિટ કરતા પહેલા બધા પ્રશ્નોના જવાબ આપો.)");
+            return;
+        }
+
+        currentQuizData.forEach((qData, i) => {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const solutionDiv = document.getElementById(`solution-${i}`);
+            const isCorrect = selected.value === 'correct';
+
+            if (isCorrect) {
+                score++;
+                solutionDiv.className = 'solution solution-correct';
+                solutionDiv.innerHTML = `<strong>Correct! (સાચો જવાબ)</strong><br><br><strong>Explanation:</strong> ${qData.solEn}<br><strong>સમજૂતી:</strong> ${qData.solGu}`;
+            } else {
+                solutionDiv.className = 'solution solution-incorrect';
+                solutionDiv.innerHTML = `<strong>Incorrect. (ખોટો જવાબ)</strong> The correct answer is <strong>${qData.correct}</strong>.<br><br><strong>Explanation:</strong> ${qData.solEn}<br><strong>સમજૂતી:</strong> ${qData.solGu}`;
+            }
+            solutionDiv.style.display = 'block';
+
+            // Disable all radio buttons
+            const inputs = document.querySelectorAll(`input[name="q${i}"]`);
+            inputs.forEach(input => input.disabled = true);
+        });
+
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.innerHTML = `Your Score: ${score} / ${currentQuizData.length}`;
+        scoreDisplay.style.display = 'block';
+
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Practice Session Completed";
+
+        MathJax.typesetPromise();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
