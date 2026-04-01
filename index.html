@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTU Mathematics: Complete Syllabus Practice Bank</title>
+    <title>Semester 2 Mathematics: Complete Syllabus Practice Bank</title>
     
     <script>
         window.MathJax = {
@@ -266,7 +266,7 @@
 <div class="footer">
     <div class="visitor-counter">
         <span>Page Visits:</span>
-        <img src="https://api.visitorbadge.io/api/visitors?path=bhavin.gtu.maths.final.v4&countColor=%23b91c1c&style=flat" alt="Visitor Badge" />
+        <img src="https://api.visitorbadge.io/api/visitors?path=bhavin.gtu.maths.ultimate&countColor=%23b91c1c&style=flat" alt="Visitor Badge" />
     </div>
     <div class="copyright">
         &copy; 2024. Prepared by <strong>Bhavin R Patel</strong> (Lecturer, Maths).
@@ -305,51 +305,186 @@
         return `${m} minutes and ${s} seconds`;
     }
 
-    // MEGA-GENERATORS: Strictly aligned with GTU past papers. Out-of-topic items removed.
+    // MEGA-GENERATORS: Exhaustive, Heavily Parameterized to ensure uniqueness.
     const generators = {
         "matrix": {
             "mcq": [
                 () => { 
-                    let r1 = rand(2, 4), c1 = rand(2, 4); 
-                    while(r1 === c1) c1 = rand(2,4); 
-                    let c2 = rand(2, 4); 
-                    while(c2 === c1 || c2 === r1) c2 = rand(2,4);
+                    let r1 = rand(2, 5), c1 = rand(2, 5); 
+                    let c2 = rand(2, 5); 
+                    while(c2 === c1 || c2 === r1) c2 = rand(2,5);
                     return { 
                         en: `If matrix $A$ is $${r1} \\times ${c1}$ and $B$ is $${c1} \\times ${c2}$, what is the order of $AB$?`, 
                         gu: `જો $A$ ની કક્ષા $${r1} \\times ${c1}$ અને $B$ ની કક્ષા $${c1} \\times ${c2}$ હોય, તો $AB$ ની કક્ષા:`, 
-                        correct: `$${r1} \\times ${c2}$`, 
-                        distractors: [`$${c1} \\times ${r1}$`, `$${c1} \\times ${c2}$`, `Not possible`], 
-                        solEn: `Rule: $(m \\times n) \\times (n \\times p) = m \\times p$.`, 
-                        solGu: `શ્રેણિક ગુણાકારનો નિયમ.` 
+                        correct: `$${r1} \\times ${c2}$`, distractors: [`$${c1} \\times ${r1}$`, `$${c1} \\times ${c2}$`, `Not possible`], 
+                        solEn: `Rule: $(m \\times n) \\times (n \\times p) = m \\times p$.`, solGu: `શ્રેણિક ગુણાકારનો નિયમ.` 
                     }; 
                 },
-                () => { return { en: `If $A$ is a square matrix and $|A| = 0$, then $A$ is called:`, gu: `જો ચોરસ શ્રેણિક $A$ માટે $|A| = 0$ હોય, તો $A$ ને શું કહેવાય?`, correct: `Singular Matrix`, distractors: [`Non-singular Matrix`, `Identity Matrix`, `Symmetric Matrix`], solEn: `Definition of Singular Matrix.`, solGu: `અસામાન્ય શ્રેણિકની વ્યાખ્યા.` }; },
-                () => { return { en: `Which of the following is true for transpose of matrices $A$ and $B$?`, gu: `શ્રેણિક $A$ અને $B$ ના પરિવર્ત માટે નીચેનામાંથી શું સાચું છે?`, correct: `$(AB)^T = B^T A^T$`, distractors: [`$(AB)^T = A^T B^T$`, `$(A+B)^T = A^T B^T$`, `$(AB)^T = A^{-1} B^{-1}$`], solEn: `Reversal law of transposes.`, solGu: `પરિવર્ત શ્રેણિકના નિયમ મુજબ.` }; },
-                () => { return { en: `If $A \\cdot A^{-1} = I$, what is $I$?`, gu: `જો $A \\cdot A^{-1} = I$ હોય, તો $I$ શું છે?`, correct: `Identity Matrix`, distractors: [`Zero Matrix`, `Adjoint Matrix`, `Symmetric Matrix`], solEn: `Multiplying a matrix by its inverse yields the Identity matrix.`, solGu: `શ્રેણિક અને તેના વ્યસ્ત નો ગુણાકાર એકમ શ્રેણિક આપે છે.` }; },
-                () => { let a = rand(-5, 5), b = rand(-5, 5), c = rand(-5, 5), d = rand(-5, 5); return { en: `Find the adjoint of $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$.`, gu: `$A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ નો સહઅવયવજ શ્રેણિક (adj A) શોધો.`, correct: `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${-a} & ${-b} \\\\ ${-c} & ${-d} \\end{bmatrix}$`], solEn: `Swap main diagonal, flip signs of off-diagonal.`, solGu: `મુખ્ય વિકર્ણ બદલો, અન્યના ચિહ્નો બદલો.` }; },
-                () => { let k = rand(2, 5), a = rand(1, 4), d = rand(1, 4); return { en: `If $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$, then $${k}A =$ ?`, gu: `જો $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$ હોય, તો $${k}A =$ ?`, correct: `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} ${a+k} & 0 \\\\ 0 & ${d+k} \\end{bmatrix}$`, `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`], solEn: `Multiply every element by ${k}.`, solGu: `દરેક ઘટકને ${k} વડે ગુણો.` }; },
+                () => { 
+                    let n = rand(2,4);
+                    return { 
+                        en: `If $A$ is a $${n} \\times ${n}$ square matrix and $|A| = 0$, then $A$ is called:`, 
+                        gu: `જો $${n} \\times ${n}$ ચોરસ શ્રેણિક $A$ માટે $|A| = 0$ હોય, તો $A$ ને શું કહેવાય?`, 
+                        correct: `Singular Matrix`, distractors: [`Non-singular Matrix`, `Identity Matrix`, `Symmetric Matrix`], 
+                        solEn: `Definition of Singular Matrix.`, solGu: `અસામાન્ય શ્રેણિકની વ્યાખ્યા.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(2,9); 
+                    return { 
+                        en: `Which of the following is true for transpose of matrices $A_{${a}\\times ${a}}$ and $B_{${a}\\times ${a}}$?`, 
+                        gu: `શ્રેણિક $A$ અને $B$ ના પરિવર્ત માટે નીચેનામાંથી શું સાચું છે?`, 
+                        correct: `$(AB)^T = B^T A^T$`, distractors: [`$(AB)^T = A^T B^T$`, `$(A+B)^T = A^T B^T$`, `$(AB)^T = A^{-1} B^{-1}$`], 
+                        solEn: `Reversal law of transposes.`, solGu: `પરિવર્ત શ્રેણિકના નિયમ મુજબ.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(1, 9);
+                    return { 
+                        en: `If $A \\cdot A^{-1} = I_{${a}}$, what is $I_{${a}}$?`, 
+                        gu: `જો $A \\cdot A^{-1} = I_{${a}}$ હોય, તો $I_{${a}}$ શું છે?`, 
+                        correct: `Identity Matrix`, distractors: [`Zero Matrix`, `Adjoint Matrix`, `Symmetric Matrix`], 
+                        solEn: `Multiplying a matrix by its inverse yields the Identity matrix.`, solGu: `શ્રેણિક અને તેના વ્યસ્ત નો ગુણાકાર એકમ શ્રેણિક આપે છે.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(-5, 5), b = rand(-5, 5), c = rand(-5, 5), d = rand(-5, 5); 
+                    return { 
+                        en: `Find the adjoint of $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$.`, 
+                        gu: `$A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ નો સહઅવયવજ શ્રેણિક (adj A) શોધો.`, 
+                        correct: `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${-a} & ${-b} \\\\ ${-c} & ${-d} \\end{bmatrix}$`], 
+                        solEn: `Swap main diagonal, flip signs of off-diagonal.`, solGu: `મુખ્ય વિકર્ણ બદલો, અન્યના ચિહ્નો બદલો.` 
+                    }; 
+                },
+                () => { 
+                    let k = rand(2, 5), a = rand(1, 4), d = rand(1, 4); 
+                    return { 
+                        en: `If $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$, then $${k}A =$ ?`, 
+                        gu: `જો $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$ હોય, તો $${k}A =$ ?`, 
+                        correct: `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${a+k} & 0 \\\\ 0 & ${d+k} \\end{bmatrix}$`, `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`], 
+                        solEn: `Multiply every element by ${k}.`, solGu: `દરેક ઘટકને ${k} વડે ગુણો.` 
+                    }; 
+                },
                 () => { 
                     let x = rand(2, 6), y = rand(1, 5); 
+                    let c1 = rand(1,9), c2 = rand(1,9);
                     return { 
-                        en: `If $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$, find $x+y$.`, 
-                        gu: `જો $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$ હોય, તો $x+y$ શોધો.`, 
-                        correct: `$${x+y}$`, 
-                        distractors: [`$${x+y+2}$`, `$${x-y}$`, `$${x+y-1}$`], 
-                        solEn: `Equate elements: $x-1=${x-1}, y+2=${y+2}$. Sum is ${x+y}$.`, 
+                        en: `If $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$, find $x+y+${c1}$.`, 
+                        gu: `જો $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$ હોય, તો $x+y+${c1}$ શોધો.`, 
+                        correct: `$${x+y+c1}$`, 
+                        distractors: [`$${x+y+c1+2}$`, `$${x-y+c1}$`, `$${x+y-1}$`], 
+                        solEn: `Equate elements: $x-1=${x-1}, y+2=${y+2}$. Sum is ${x+y+c1}$.`, 
                         solGu: `ઘટકો સરખાવો અને સરવાળો કરો.` 
                     }; 
                 }
             ],
             "examples": [
-                () => { let a = rand(1, 3), b = rand(1, 3), c = rand(2, 4), d = rand(4, 6); let det = (a*d) - (b*c); if(det === 0) { d++; det = (a*d) - (b*c); } return { en: `Find $A^{-1}$ if $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$.`, gu: `જો $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ હોય, તો $A^{-1}$ શોધો.`, correct: `$\\frac{1}{${det}}\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`, distractors: [`$\\frac{1}{${det}}\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\frac{1}{${det+1}}\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`], solEn: `Determinant $|A| = ${det}$. $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$.`, solGu: `નિશ્ચાયક $|A| = ${det}$. $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ વાપરો.` }; },
-                () => { return { en: `Find the inverse matrix $A^{-1}$ if $A = \\begin{bmatrix} 3 & -1 & 2 \\\\ 4 & 1 & -1 \\\\ 5 & 0 & 1 \\end{bmatrix}$.`, gu: `જો $A = \\begin{bmatrix} 3 & -1 & 2 \\\\ 4 & 1 & -1 \\\\ 5 & 0 & 1 \\end{bmatrix}$ હોય, તો વ્યસ્ત શ્રેણિક $A^{-1}$ શોધો.`, correct: `$\\frac{1}{2}\\begin{bmatrix} 1 & 1 & -1 \\\\ -9 & -7 & 11 \\\\ -5 & -5 & 7 \\end{bmatrix}$`, distractors: [`$\\frac{1}{-2}\\begin{bmatrix} 1 & 1 & -1 \\\\ 9 & 7 & 11 \\\\ 5 & 5 & 7 \\end{bmatrix}$`, `$\\begin{bmatrix} 1 & 1 & -1 \\\\ -9 & -7 & 11 \\\\ -5 & -5 & 7 \\end{bmatrix}$`, `$\\frac{1}{4}\\begin{bmatrix} 1 & 2 & 1 \\\\ -9 & -7 & 11 \\\\ -5 & -5 & 7 \\end{bmatrix}$`], solEn: `<span class="step-title">Step 1:</span> Find $|A| = 3(1) -(-1)(9) + 2(-5) = 2$.<br><span class="step-title">Step 2:</span> Find Cofactors and Adjoint matrix.<br><span class="step-title">Step 3:</span> $A^{-1} = \\frac{1}{2} \\text{adj}(A)$.`, solGu: `પ્રથમ નિશ્ચાયક |A| = 2 શોધો. પછી સહઅવયવજ શ્રેણિક શોધીને $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ સૂત્ર વાપરો.` }; },
-                () => { let a1 = rand(1,3), a2 = rand(-2,2), a3 = rand(0,4), a4 = rand(1,3); let b1 = rand(2,4), b2 = rand(1,3), b3 = rand(-1,3), b4 = rand(2,5); return { en: `Find matrix $X$ if $2A + X = 3B$, where $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$.`, gu: `જો સમીકરણ $2A + X = 3B$ હોય, તો શ્રેણિક $X$ શોધો.`, correct: `$\\begin{bmatrix} ${3*b1 - 2*a1} & ${3*b2 - 2*a2} \\\\ ${3*b3 - 2*a3} & ${3*b4 - 2*a4} \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} ${2*a1 + 3*b1} & ${2*a2 + 3*b2} \\\\ ${2*a3 + 3*b3} & ${2*a4 + 3*b4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${b1 - a1} & ${b2 - a2} \\\\ ${b3 - a3} & ${b4 - a4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${3*b1 - a1} & ${3*b2 - a2} \\\\ ${3*b3 - a3} & ${3*b4 - a4} \\end{bmatrix}$`], solEn: `Rearrange to $X = 3B - 2A$. Compute $3B$ and subtract $2A$ element by element.`, solGu: `સમીકરણ $X = 3B - 2A$ બનાવો. 3B ની ગણતરી કરો અને તેમાંથી 2A બાદ કરો.` }; },
-                () => { let a1=rand(1,2), a2=rand(0,2), a3=rand(-1,1), a4=rand(1,3); let b1=rand(2,3), b2=rand(-1,1), b3=rand(1,2), b4=rand(0,2); let c1 = a1*b1+a2*b3, c2 = a1*b2+a2*b4, c3 = a3*b1+a4*b3, c4 = a3*b2+a4*b4; return { en: `If $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$, find $AB$.`, gu: `જો $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ અને $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$ હોય, તો $AB$ શોધો.`, correct: `$\\begin{bmatrix} ${c1} & ${c2} \\\\ ${c3} & ${c4} \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} ${c1+1} & ${c2} \\\\ ${c3} & ${c4-1} \\end{bmatrix}$`, `$\\begin{bmatrix} ${a1*b1} & ${a2*b2} \\\\ ${a3*b3} & ${a4*b4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${c4} & ${c3} \\\\ ${c2} & ${c1} \\end{bmatrix}$`], solEn: `Multiply rows of A with columns of B: $C_{11} = (${a1})(${b1}) + (${a2})(${b3}) = ${c1}$, etc.`, solGu: `A ની હાર અને B ના સ્તંભનો ગુણાકાર કરો.` }; },
-                () => { let x = rand(1, 3), y = rand(1, 3); let a = rand(2, 4), b = rand(1, 3), c = rand(1, 3), d = rand(2, 4); let e = a*x + b*y, f = c*x - d*y; return { en: `Solve using matrix method: $${a}x + ${b}y = ${e}$ and $${c}x - ${d}y = ${f}$.`, gu: `શ્રેણિક ની મદદ થી સમીકરણ $${a}x + ${b}y = ${e}$ અને $${c}x - ${d}y = ${f}$ ઉકેલો.`, correct: `$x = ${x}, y = ${y}$`, distractors: [`$x = ${y}, y = ${x}$`, `$x = -${x}, y = ${y}$`, `$x = ${x+1}, y = ${y-1}$`], solEn: `Write as $AX = B$. Find $A^{-1}$ and compute $X = A^{-1}B$.`, solGu: `$AX = B$ સ્વરૂપમાં લખીને $X = A^{-1}B$ નો ઉપયોગ કરો.` }; },
-                () => { let a = 1, b = 2, c = 2, d = 3; let k = 4, m = 1; return { en: `If $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$, evaluate $A^2 - ${k}A - ${m}I$.`, gu: `જો $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ હોય, તો $A^2 - ${k}A - ${m}I$ ની કિંમત શોધો.`, correct: `$\\begin{bmatrix} 0 & 0 \\\\ 0 & 0 \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$`, `$\\begin{bmatrix} 1 & 2 \\\\ 2 & 3 \\end{bmatrix}$`, `$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$`], solEn: `Calculate $A^2 = \\begin{bmatrix} 5 & 8 \\\\ 8 & 13 \\end{bmatrix}$. Subtract $4A$ and $I$ to get Zero matrix.`, solGu: `પ્રથમ $A^2$ શોધો, પછી તેમાંથી $4A$ અને $I$ બાદ કરતા શૂન્ય શ્રેણિક મળશે.` }; },
-                () => { let a = rand(2,4), b = rand(2,4), c=rand(3,5); let x = (b*c)/a; return { en: `If matrix $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & x \\end{bmatrix}$ is singular, find $x$.`, gu: `જો શ્રેણિક $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & x \\end{bmatrix}$ અસામાન્ય હોય, તો $x$ શોધો.`, correct: `$${x}$`, distractors: [`$${x+1}$`, `$0$`, `$${-x}$`], solEn: `Determinant is 0. $${a}x - ${b*c} = 0 \\implies x=${x}$.`, solGu: `નિશ્ચાયક 0 થાય.` }; },
-                () => { let a1=rand(1,4), a2=rand(1,4), a3=rand(1,4); let b1=rand(1,4), b2=rand(1,4), b3=rand(1,4); return { en: `Find $AB$ if $A = \\begin{bmatrix} ${a1} \\\\ ${a2} \\\\ ${a3} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} & ${b3} \\end{bmatrix}$.`, gu: `જો $A = \\begin{bmatrix} ${a1} \\\\ ${a2} \\\\ ${a3} \\end{bmatrix}$ અને $B = \\begin{bmatrix} ${b1} & ${b2} & ${b3} \\end{bmatrix}$ હોય, તો $AB$ શોધો.`, correct: `$\\begin{bmatrix} ${a1*b1} & ${a1*b2} & ${a1*b3} \\\\ ${a2*b1} & ${a2*b2} & ${a2*b3} \\\\ ${a3*b1} & ${a3*b2} & ${a3*b3} \\end{bmatrix}$`, distractors: [`$\\begin{bmatrix} ${a1*b1 + a2*b2 + a3*b3} \\end{bmatrix}$`, `Not Possible`, `$\\begin{bmatrix} ${a1*b1} & 0 & 0 \\\\ 0 & ${a2*b2} & 0 \\\\ 0 & 0 & ${a3*b3} \\end{bmatrix}$`], solEn: `(3x1) * (1x3) yields a 3x3 matrix. Multiply each row element of A by each column of B.`, solGu: `(3x1) અને (1x3) નો ગુણાકાર 3x3 શ્રેણિક આપે.` }; },
-                () => { let x = rand(2, 5), y = rand(2, 5); return { en: `If $\\begin{bmatrix} 2x-y & 5 \\\\ 3 & y \\end{bmatrix} = \\begin{bmatrix} ${2*x-y} & 5 \\\\ 3 & ${y} \\end{bmatrix}$, find $x$.`, gu: `જો $\\begin{bmatrix} 2x-y & 5 \\\\ 3 & y \\end{bmatrix} = \\begin{bmatrix} ${2*x-y} & 5 \\\\ 3 & ${y} \\end{bmatrix}$ હોય, તો $x$ શોધો.`, correct: `$${x}$`, distractors: [`$${y}$`, `$${x+y}$`, `$0$`], solEn: `Equate elements: $y=${y}$. $2x-y = ${2*x-y} \\implies 2x-${y} = ${2*x-y} \\implies x=${x}$.`, solGu: `સમાન ઘટકો સરખાવો.` }; }
+                () => { 
+                    let a = rand(1, 3), b = rand(1, 3), c = rand(2, 4), d = rand(4, 6); 
+                    let det = (a*d) - (b*c); 
+                    if(det === 0) { d++; det = (a*d) - (b*c); } 
+                    return { 
+                        en: `Find $A^{-1}$ if $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$.`, 
+                        gu: `જો $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ હોય, તો $A^{-1}$ શોધો.`, 
+                        correct: `$\\frac{1}{${det}}\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`, 
+                        distractors: [`$\\frac{1}{${det}}\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\frac{1}{${det+1}}\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`], 
+                        solEn: `<span class="step-title">Step 1:</span> Find Determinant $|A| = (${a})(${d}) - (${b})(${c}) = ${det}$.<br><span class="step-title">Step 2:</span> $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$.`, 
+                        solGu: `નિશ્ચાયક $|A| = ${det}$. $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ વાપરો.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(1, 4);
+                    return { 
+                        en: `Find the inverse matrix $A^{-1}$ if $A = \\begin{bmatrix} 3 & -1 & 2 \\\\ 4 & 1 & -1 \\\\ 5 & 0 & ${x} \\end{bmatrix}$.`, 
+                        gu: `જો $A = \\begin{bmatrix} 3 & -1 & 2 \\\\ 4 & 1 & -1 \\\\ 5 & 0 & ${x} \\end{bmatrix}$ હોય, તો વ્યસ્ત શ્રેણિક $A^{-1}$ શોધો.`, 
+                        correct: `Use $\\frac{1}{|A|} \\text{adj}(A)$`, 
+                        distractors: [`$\\frac{1}{|A|} A^T$`, `$\\text{adj}(A)$`, `Zero Matrix`], 
+                        solEn: `<span class="step-title">Step 1:</span> Find $|A| = 3(${x}-0) -(-1)(4${x}-(-5)) + 2(0-5)$.<br><span class="step-title">Step 2:</span> Find Cofactors and Adjoint matrix.<br><span class="step-title">Step 3:</span> $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$.`, 
+                        solGu: `પ્રથમ નિશ્ચાયક |A| શોધો. પછી સહઅવયવજ શ્રેણિક શોધીને $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ સૂત્ર વાપરો.` 
+                    }; 
+                },
+                () => { 
+                    let a1 = rand(1,3), a2 = rand(-2,2), a3 = rand(0,4), a4 = rand(1,3); 
+                    let b1 = rand(2,4), b2 = rand(1,3), b3 = rand(-1,3), b4 = rand(2,5); 
+                    return { 
+                        en: `Find matrix $X$ if $2A + X = 3B$, where $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$.`, 
+                        gu: `જો સમીકરણ $2A + X = 3B$ હોય, તો શ્રેણિક $X$ શોધો.`, 
+                        correct: `$\\begin{bmatrix} ${3*b1 - 2*a1} & ${3*b2 - 2*a2} \\\\ ${3*b3 - 2*a3} & ${3*b4 - 2*a4} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${2*a1 + 3*b1} & ${2*a2 + 3*b2} \\\\ ${2*a3 + 3*b3} & ${2*a4 + 3*b4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${b1 - a1} & ${b2 - a2} \\\\ ${b3 - a3} & ${b4 - a4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${3*b1 - a1} & ${3*b2 - a2} \\\\ ${3*b3 - a3} & ${3*b4 - a4} \\end{bmatrix}$`], 
+                        solEn: `Rearrange to $X = 3B - 2A$. Compute $3B$ and subtract $2A$ element by element.`, 
+                        solGu: `સમીકરણ $X = 3B - 2A$ બનાવો. 3B ની ગણતરી કરો અને તેમાંથી 2A બાદ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let a1=rand(1,2), a2=rand(0,2), a3=rand(-1,1), a4=rand(1,3); 
+                    let b1=rand(2,3), b2=rand(-1,1), b3=rand(1,2), b4=rand(0,2); 
+                    let c1 = a1*b1+a2*b3, c2 = a1*b2+a2*b4, c3 = a3*b1+a4*b3, c4 = a3*b2+a4*b4; 
+                    return { 
+                        en: `If $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$, find $AB$.`, 
+                        gu: `જો $A = \\begin{bmatrix} ${a1} & ${a2} \\\\ ${a3} & ${a4} \\end{bmatrix}$ અને $B = \\begin{bmatrix} ${b1} & ${b2} \\\\ ${b3} & ${b4} \\end{bmatrix}$ હોય, તો $AB$ શોધો.`, 
+                        correct: `$\\begin{bmatrix} ${c1} & ${c2} \\\\ ${c3} & ${c4} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${c1+1} & ${c2} \\\\ ${c3} & ${c4-1} \\end{bmatrix}$`, `$\\begin{bmatrix} ${a1*b1} & ${a2*b2} \\\\ ${a3*b3} & ${a4*b4} \\end{bmatrix}$`, `$\\begin{bmatrix} ${c4} & ${c3} \\\\ ${c2} & ${c1} \\end{bmatrix}$`], 
+                        solEn: `Multiply rows of A with columns of B: $C_{11} = (${a1})(${b1}) + (${a2})(${b3}) = ${c1}$, etc.`, 
+                        solGu: `A ની હાર અને B ના સ્તંભનો ગુણાકાર કરો.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(1, 3), y = rand(1, 3); 
+                    let a = rand(2, 4), b = rand(1, 3), c = rand(1, 3), d = rand(2, 4); 
+                    let e = a*x + b*y, f = c*x - d*y; 
+                    return { 
+                        en: `Solve using matrix method: $${a}x + ${b}y = ${e}$ and $${c}x - ${d}y = ${f}$.`, 
+                        gu: `શ્રેણિક ની મદદ થી સમીકરણ $${a}x + ${b}y = ${e}$ અને $${c}x - ${d}y = ${f}$ ઉકેલો.`, 
+                        correct: `$x = ${x}, y = ${y}$`, 
+                        distractors: [`$x = ${y}, y = ${x}$`, `$x = -${x}, y = ${y}$`, `$x = ${x+1}, y = ${y-1}$`], 
+                        solEn: `<span class="step-title">Step 1:</span> Write as $AX = B$ where $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & -${d} \\end{bmatrix}$, $B = \\begin{bmatrix} ${e} \\\\ ${f} \\end{bmatrix}$.<br><span class="step-title">Step 2:</span> Calculate $X = A^{-1}B$.`, 
+                        solGu: `$AX = B$ સ્વરૂપમાં લખીને $X = A^{-1}B$ નો ઉપયોગ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let a = 1, b = 2, c = 2, d = 3; let k = rand(3, 5), m = rand(1, 3); 
+                    let a2_1 = a*a+b*c, a2_2 = a*b+b*d, a2_3 = c*a+d*c, a2_4 = c*b+d*d;
+                    let ans1 = a2_1 - k*a - m, ans2 = a2_2 - k*b, ans3 = a2_3 - k*c, ans4 = a2_4 - k*d - m;
+                    return { 
+                        en: `If $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$, evaluate $A^2 - ${k}A - ${m}I$.`, 
+                        gu: `જો $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ હોય, તો $A^2 - ${k}A - ${m}I$ ની કિંમત શોધો.`, 
+                        correct: `$\\begin{bmatrix} ${ans1} & ${ans2} \\\\ ${ans3} & ${ans4} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${ans1+1} & ${ans2} \\\\ ${ans3} & ${ans4+1} \\end{bmatrix}$`, `$\\begin{bmatrix} 0 & 0 \\\\ 0 & 0 \\end{bmatrix}$`, `$\\begin{bmatrix} ${a*a - k*a} & ${b*b - k*b} \\\\ ${c*c - k*c} & ${d*d - k*d} \\end{bmatrix}$`], 
+                        solEn: `Calculate $A^2 = \\begin{bmatrix} 5 & 8 \\\\ 8 & 13 \\end{bmatrix}$. Subtract $${k}A$ and $${m}I$.`, 
+                        solGu: `પ્રથમ $A^2$ શોધો, પછી તેમાંથી $${k}A$ અને $${m}I$ બાદ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(2,4), b = rand(2,4), c=rand(3,5); let x = (b*c)/a; 
+                    return { 
+                        en: `If matrix $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & x \\end{bmatrix}$ is singular, find $x$.`, 
+                        gu: `જો શ્રેણિક $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & x \\end{bmatrix}$ અસામાન્ય હોય, તો $x$ શોધો.`, 
+                        correct: `$${x}$`, distractors: [`$${x+1}$`, `$0$`, `$${-x}$`], 
+                        solEn: `Determinant is 0. $${a}x - ${b*c} = 0 \\implies x=${x}$.`, solGu: `નિશ્ચાયક 0 થાય.` 
+                    }; 
+                },
+                () => { 
+                    let a1=rand(1,4), a2=rand(1,4), a3=rand(1,4); let b1=rand(1,4), b2=rand(1,4), b3=rand(1,4); 
+                    return { 
+                        en: `Find $AB$ if $A = \\begin{bmatrix} ${a1} \\\\ ${a2} \\\\ ${a3} \\end{bmatrix}$ and $B = \\begin{bmatrix} ${b1} & ${b2} & ${b3} \\end{bmatrix}$.`, 
+                        gu: `જો $A = \\begin{bmatrix} ${a1} \\\\ ${a2} \\\\ ${a3} \\end{bmatrix}$ અને $B = \\begin{bmatrix} ${b1} & ${b2} & ${b3} \\end{bmatrix}$ હોય, તો $AB$ શોધો.`, 
+                        correct: `$\\begin{bmatrix} ${a1*b1} & ${a1*b2} & ${a1*b3} \\\\ ${a2*b1} & ${a2*b2} & ${a2*b3} \\\\ ${a3*b1} & ${a3*b2} & ${a3*b3} \\end{bmatrix}$`, 
+                        distractors: [`$\\begin{bmatrix} ${a1*b1 + a2*b2 + a3*b3} \\end{bmatrix}$`, `Not Possible`, `$\\begin{bmatrix} ${a1*b1} & 0 & 0 \\\\ 0 & ${a2*b2} & 0 \\\\ 0 & 0 & ${a3*b3} \\end{bmatrix}$`], 
+                        solEn: `(3x1) * (1x3) yields a 3x3 matrix. Multiply each row element of A by each column of B.`, 
+                        solGu: `(3x1) અને (1x3) નો ગુણાકાર 3x3 શ્રેણિક આપે.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(2, 5), y = rand(2, 5); 
+                    return { 
+                        en: `If $\\begin{bmatrix} 2x-y & 5 \\\\ 3 & y \\end{bmatrix} = \\begin{bmatrix} ${2*x-y} & 5 \\\\ 3 & ${y} \\end{bmatrix}$, find $x$.`, 
+                        gu: `જો $\\begin{bmatrix} 2x-y & 5 \\\\ 3 & y \\end{bmatrix} = \\begin{bmatrix} ${2*x-y} & 5 \\\\ 3 & ${y} \\end{bmatrix}$ હોય, તો $x$ શોધો.`, 
+                        correct: `$${x}$`, distractors: [`$${y}$`, `$${x+y}$`, `$0$`], 
+                        solEn: `Equate elements: $y=${y}$. $2x-y = ${2*x-y} \\implies 2x-${y} = ${2*x-y} \\implies x=${x}$.`, solGu: `સમાન ઘટકો સરખાવો.` 
+                    }; 
+                }
             ]
         },
         "complex": {
@@ -358,22 +493,95 @@
                 () => { let a = rand(2, 6), b = rand(2, 6); while(a===b) b=rand(2,6); return { en: `Imaginary part of $Z = ${a} - ${b}i$ is:`, gu: `$Z = ${a} - ${b}i$ નો કાલ્પનિક ભાગ:`, correct: `$-${b}$`, distractors: [`$${b}$`, `$${a}$`, `$-${b}i$`], solEn: `The coefficient of 'i'.`, solGu: `'i' નો સહગુણક.`}; },
                 () => { let a = rand(2, 6), b = rand(2, 6); return { en: `Modulus of $Z = ${a} + ${b}i$ is:`, gu: `$Z = ${a} + ${b}i$ નો માનાંક:`, correct: `$\\sqrt{${a*a + b*b}}$`, distractors: [`$${a+b}$`, `$\\sqrt{${a*a - b*b}}$`, `$${a*a+b*b}$`], solEn: `$|Z| = \\sqrt{x^2+y^2}$.`, solGu: `સૂત્ર $|Z| = \\sqrt{x^2+y^2}$.`}; },
                 () => { let a = rand(2, 6), b = rand(2, 6); return { en: `Conjugate of $Z = ${a} - ${b}i$ is:`, gu: `$Z = ${a} - ${b}i$ ની અનુબદ્ધ સંખ્યા:`, correct: `$${a} + ${b}i$`, distractors: [`$-${a} - ${b}i$`, `$-${a} + ${b}i$`, `$${b} - ${a}i$`], solEn: `Change sign of imaginary part.`, solGu: `કાલ્પનિક ભાગનું ચિહ્ન બદલો.`}; },
-                () => { return { en: `Argument of $Z = 1 + i$ is:`, gu: `$Z = 1 + i$ નો કોણાંક:`, correct: `$\\pi/4$`, distractors: [`$\\pi/2$`, `$\\pi$`, `$2\\pi$`], solEn: `$\\tan^{-1}(1/1) = \\pi/4$.`, solGu: `$\\tan^{-1}(y/x)$ સૂત્ર.`}; },
+                () => { let x = rand(2,5); return { en: `Argument of $Z = ${x} + ${x}i$ is:`, gu: `$Z = ${x} + ${x}i$ નો કોણાંક:`, correct: `$\\pi/4$`, distractors: [`$\\pi/2$`, `$\\pi$`, `$2\\pi$`], solEn: `$\\tan^{-1}(${x}/${x}) = \\pi/4$.`, solGu: `$\\tan^{-1}(y/x)$ સૂત્ર.`}; },
                 () => { let n = rand(1, 5); let power = 4 * n + 2; return { en: `$i^{${power}} = $ ?`, gu: `$i^{${power}} = $ ?`, correct: `$-1$`, distractors: [`$1$`, `$i$`, `$-i$`], solEn: `$i^{${power}} = (i^4)^${n} \\cdot i^2 = -1$.`, solGu: `$i^{4n} \\cdot i^2 = 1 \\cdot (-1) = -1$.`}; },
                 () => { let n = rand(1, 5); let power = 4 * n + 3; return { en: `$i^{${power}} = $ ?`, gu: `$i^{${power}} = $ ?`, correct: `$-i$`, distractors: [`$1$`, `$-1$`, `$i$`], solEn: `$i^{${power}} = (i^4)^${n} \\cdot i^3 = -i$.`, solGu: `$i^{4n} \\cdot i^3 = -i$.`}; },
-                () => { return { en: `Euler's exponential form of $z = r(\\cos\\theta + i\\sin\\theta)$ is:`, gu: `સંકર સંખ્યા $z$ નું ઘાતાંકીય (Euler) સ્વરૂપ:`, correct: `$r e^{i\\theta}$`, distractors: [`$e^{r\\theta}$`, `$r e^{-i\\theta}$`, `$i e^{r\\theta}$`], solEn: `Euler's formula states $e^{i\\theta} = \\cos\\theta + i\\sin\\theta$.`, solGu: `યુલર નું સૂત્ર.`}; }
+                () => { let r = rand(2,5); return { en: `Euler's exponential form of $z = ${r}(\\cos\\theta + i\\sin\\theta)$ is:`, gu: `સંકર સંખ્યા $z$ નું ઘાતાંકીય (Euler) સ્વરૂપ:`, correct: `$${r} e^{i\\theta}$`, distractors: [`$e^{${r}\\theta}$`, `$${r} e^{-i\\theta}$`, `$i e^{${r}\\theta}$`], solEn: `Euler's formula states $e^{i\\theta} = \\cos\\theta + i\\sin\\theta$.`, solGu: `યુલર નું સૂત્ર.`}; }
             ],
             "examples": [
-                () => { const pairs = [[3,4, 2,1, "+"], [8,6, 3,1, "+"], [7,24, 4,3, "+"], [5,12, 3,2, "+"], [3,-4, 2,1, "-"], [8,-6, 3,1, "-"]]; let [R, I, a, b, sign] = pairs[rand(0, pairs.length-1)]; let formattedI = I > 0 ? `+${I}i` : `${I}i`; return { en: `Find the square root of $${R} ${formattedI}$.`, gu: `સંકર સંખ્યા $${R} ${formattedI}$ નું વર્ગમૂળ શોધો.`, correct: `$\\pm(${a} ${sign} ${b}i)$`, distractors: [`$\\pm(${a+1} ${sign} ${b}i)$`, `$\\pm(${b} ${sign} ${a}i)$`, `$\\pm(${a} ${sign} ${b+1}i)$`], solEn: `Use direct square root formula: $\\pm\\left( \\sqrt{\\frac{|Z| + x}{2}} + i \\cdot \\text{sgn}(y) \\sqrt{\\frac{|Z| - x}{2}} \\right)$.`, solGu: `સંકર સંખ્યાના વર્ગમૂળના સીધા સૂત્રનો ઉપયોગ કરો.` }; },
-                () => { let a = rand(2, 5), b = rand(2, 5), c = rand(1, 4), d = rand(1, 4); let real = a*c - b*d, imag = a*d + b*c; return { en: `Simplify: $(${a} + ${b}i)(${c} + ${d}i)$.`, gu: `સાદુરૂપ આપો: $(${a} + ${b}i)(${c} + ${d}i)$.`, correct: `$${real} + ${imag}i$`, distractors: [`$${real} - ${imag}i$`, `$${real+2} + ${imag}i$`, `$${a*c} + ${b*d}i$`], solEn: `Multiply out: $${a*c} + ${a*d}i + ${b*c}i + ${b*d}i^2$. Remember $i^2 = -1$.`, solGu: `ગુણાકાર કરો અને $i^2 = -1$ નો ઉપયોગ કરો.` }; },
-                () => { return { en: `Find the inverse of complex number $Z = \\frac{2+3i}{4-3i}$.`, gu: `$Z = \\frac{2+3i}{4-3i}$ ની વ્યસ્ત સંકર સંખ્યા શોધો.`, correct: `$\\frac{4-3i}{2+3i} = \\frac{-1}{13} - \\frac{18}{13}i$`, distractors: [`$\\frac{1}{13} + \\frac{18}{13}i$`, `$\\frac{-1}{13} + \\frac{18}{13}i$`, `$\\frac{4+3i}{2-3i}$`], solEn: `Inverse is $\\frac{4-3i}{2+3i}$. Multiply numerator and denominator by conjugate $(2-3i)$.`, solGu: `વ્યસ્ત એટલે $\\frac{4-3i}{2+3i}$. અંશ અને છેદને અનુબદ્ધ કરણી $(2-3i)$ વડે ગુણો.` }; },
-                () => { return { en: `Express $1 + i\\sqrt{3}$ in polar form.`, gu: `$1 + i\\sqrt{3}$ ને ધ્રુવીય સ્વરૂપમાં દર્શાવો.`, correct: `$2(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3})$`, distractors: [`$2(\\cos \\frac{\\pi}{6} + i\\sin \\frac{\\pi}{6})$`, `$\\sqrt{2}(\\cos \\frac{\\pi}{3} + i\\sin \\frac{\\pi}{3})$`, `$2(\\cos \\frac{2\\pi}{3} + i\\sin \\frac{2\\pi}{3})$`], solEn: `Modulus $r = \\sqrt{1+3} = 2$. Argument $\\theta = \\tan^{-1}(\\sqrt{3}/1) = \\pi/3$. Polar form is $r(\\cos\\theta + i\\sin\\theta)$.`, solGu: `$r = 2$ અને $\\theta = \\pi/3$. ધ્રુવીય સ્વરૂપ $r(\\cos\\theta + i\\sin\\theta)$ છે.` }; },
-                () => { return { en: `Simplify using De Moivre's Theorem: $\\frac{(\\cos 2\\theta + i\\sin 2\\theta)^{-3} \\cdot (\\cos 3\\theta - i\\sin 3\\theta)^{2}}{(\\cos \\theta + i\\sin \\theta)^{-12}}$`, gu: `દ'મોવરના પ્રમેયથી સાદુરૂપ આપો: $\\frac{(\\cos 2\\theta + i\\sin 2\\theta)^{-3} \\cdot (\\cos 3\\theta - i\\sin 3\\theta)^{2}}{(\\cos \\theta + i\\sin \\theta)^{-12}}$`, correct: `$\\cos 0 + i\\sin 0 = 1$`, distractors: [`$\\cos 12\\theta + i\\sin 12\\theta$`, `$\\cos 24\\theta - i\\sin 24\\theta$`, `$-1$`], solEn: `Convert to exponential powers: $e^{i(-6\\theta)} \\cdot e^{i(-6\\theta)} / e^{i(-12\\theta)} = e^{i(-12\\theta)} / e^{i(-12\\theta)} = e^0 = 1$.`, solGu: `ઘાતાંકમાં ફેરવો. અંશ અને છેદ સમાન હોવાથી જવાબ 1 આવશે.` }; },
-                () => { let x = rand(2, 5), y = rand(2, 5); let realPart = 2*x - y, imagPart = 2*y; return { en: `Find $x, y \\in \\mathbb{R}$ if $(2x-y) + 2yi = ${realPart} + ${imagPart}i$.`, gu: `જો $(2x-y) + 2yi = ${realPart} + ${imagPart}i$ હોય, તો વાસ્તવિક $x, y$ શોધો.`, correct: `$x = ${x}, y = ${y}$`, distractors: [`$x = ${y}, y = ${x}$`, `$x = ${x+1}, y = ${y}$`, `$x = -${x}, y = -${y}$`], solEn: `Equate imaginary parts: $2y = ${imagPart} \\implies y = ${y}$. Equate real parts: $2x - y = ${realPart} \\implies x = ${x}$.`, solGu: `વાસ્તવિક અને કાલ્પનિક ભાગ સરખાવતા.` }; },
-                () => { let a = rand(2, 4), b = rand(2, 4), c = rand(1, 3), d = rand(1, 3); return { en: `Find modulus of $Z = \\frac{${a}+${b}i}{${c}+${d}i}$.`, gu: `$Z = \\frac{${a}+${b}i}{${c}+${d}i}$ નો માનાંક શોધો.`, correct: `$\\frac{\\sqrt{${a*a+b*b}}}{\\sqrt{${c*c+d*d}}}$`, distractors: [`$\\sqrt{\\frac{${a*a-b*b}}{${c*c-d*d}}}$`, `$\\frac{${a+b}}{${c+d}}$`, `$1$`], solEn: `Use property $|\\frac{z_1}{z_2}| = \\frac{|z_1|}{|z_2|}$.`, solGu: `માનાંકના ગુણધર્મ $|z_1/z_2| = |z_1|/|z_2|$ નો ઉપયોગ કરો.` }; },
-                () => { return { en: `If $z_1 = 2+3i$ and $z_2 = 4-i$, find $z_1 - 2z_2$.`, gu: `જો $z_1 = 2+3i$ અને $z_2 = 4-i$ હોય, તો $z_1 - 2z_2$ શોધો.`, correct: `$-6 + 5i$`, distractors: [`$6 - 5i$`, `$-2 + 2i$`, `$10 + 7i$`], solEn: `$2z_2 = 8-2i$. Subtraction: $(2-8) + (3 - (-2))i = -6 + 5i$.`, solGu: `વાસ્તવિક અને કાલ્પનિક ભાગની બાદબાકી કરો.` }; },
-                () => { return { en: `If $z = a+ib$, then prove $z \\cdot \\overline{z} = |z|^2$. Evaluate for $z=3+4i$.`, gu: `જો $z = a+ib$, તો $z \\cdot \\overline{z} = |z|^2$ ચકાસો. $z=3+4i$ માટે કિંમત શોધો.`, correct: `$25$`, distractors: [`$5$`, `$\\sqrt{25}$`, `$-25$`], solEn: `$(3+4i)(3-4i) = 9 - 16i^2 = 9 + 16 = 25$. $|z| = \\sqrt{3^2+4^2}=5$, so $|z|^2 = 25$.`, solGu: `$(3+4i)(3-4i) = 9 + 16 = 25$. $|z|^2$ પણ 25 થશે.` }; },
-                () => { return { en: `Find the multiplicative inverse of $Z = 4-3i$.`, gu: `$Z = 4-3i$ નો ગુણાકાર માટેનો વ્યસ્ત શોધો.`, correct: `$\\frac{4}{25} + \\frac{3}{25}i$`, distractors: [`$\\frac{4}{25} - \\frac{3}{25}i$`, `$\\frac{-4}{25} - \\frac{3}{25}i$`, `$4+3i$`], solEn: `$Z^{-1} = \\frac{\\overline{Z}}{|Z|^2} = \\frac{4+3i}{4^2 + (-3)^2} = \\frac{4+3i}{25}$.`, solGu: `વ્યસ્ત $Z^{-1} = \\frac{\\overline{Z}}{|Z|^2}$ સૂત્રનો ઉપયોગ કરો.` }; }
+                () => { 
+                    const pairs = [[3,4, 2,1, "+"], [8,6, 3,1, "+"], [7,24, 4,3, "+"], [5,12, 3,2, "+"], [3,-4, 2,1, "-"], [8,-6, 3,1, "-"]]; 
+                    let [R, I, a, b, sign] = pairs[rand(0, pairs.length-1)]; let formattedI = I > 0 ? `+${I}i` : `${I}i`; 
+                    return { 
+                        en: `Find the square root of $${R} ${formattedI}$.`, gu: `સંકર સંખ્યા $${R} ${formattedI}$ નું વર્ગમૂળ શોધો.`, 
+                        correct: `$\\pm(${a} ${sign} ${b}i)$`, distractors: [`$\\pm(${a+1} ${sign} ${b}i)$`, `$\\pm(${b} ${sign} ${a}i)$`, `$\\pm(${a} ${sign} ${b+1}i)$`], 
+                        solEn: `Use direct square root formula: $\\pm\\left( \\sqrt{\\frac{|Z| + x}{2}} + i \\cdot \\text{sgn}(y) \\sqrt{\\frac{|Z| - x}{2}} \\right)$.`, solGu: `સંકર સંખ્યાના વર્ગમૂળના સીધા સૂત્રનો ઉપયોગ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(2, 5), b = rand(2, 5), c = rand(1, 4), d = rand(1, 4); 
+                    let real = a*c - b*d, imag = a*d + b*c; 
+                    return { 
+                        en: `Simplify: $(${a} + ${b}i)(${c} + ${d}i)$.`, gu: `સાદુરૂપ આપો: $(${a} + ${b}i)(${c} + ${d}i)$.`, 
+                        correct: `$${real} + ${imag}i$`, distractors: [`$${real} - ${imag}i$`, `$${real+2} + ${imag}i$`, `$${a*c} + ${b*d}i$`], 
+                        solEn: `Multiply out: $${a*c} + ${a*d}i + ${b*c}i + ${b*d}i^2$. Remember $i^2 = -1$.`, solGu: `ગુણાકાર કરો અને $i^2 = -1$ નો ઉપયોગ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(2,5);
+                    return { 
+                        en: `Find the inverse of complex number $Z = \\frac{${x}+3i}{4-3i}$.`, gu: `$Z = \\frac{${x}+3i}{4-3i}$ ની વ્યસ્ત સંકર સંખ્યા શોધો.`, 
+                        correct: `Multiply by conjugate of numerator`, distractors: [`Multiply by $4-3i$`, `Multiply by ${x}-3i`, `None`], 
+                        solEn: `Inverse is $\\frac{4-3i}{${x}+3i}$. Multiply numerator and denominator by conjugate $(${x}-3i)$.`, solGu: `વ્યસ્ત કરો અને અંશ-છેદને અનુબદ્ધ કરણી વડે ગુણો.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(1,3);
+                    return { 
+                        en: `Express ${x} + i\\sqrt{3} in polar form.`, gu: `${x} + i\\sqrt{3} ને ધ્રુવીય સ્વરૂપમાં દર્શાવો.`, 
+                        correct: `Find $r$ and $\\theta$`, distractors: [`Use $r(\\sin\\theta + i\\cos\\theta)$`, `Find only $r$`, `Find only $\\theta$`], 
+                        solEn: `Modulus $r = \\sqrt{${x}^2+3}$. Argument $\\theta = \\tan^{-1}(\\sqrt{3}/${x})$. Polar form is $r(\\cos\\theta + i\\sin\\theta)$.`, solGu: `$r$ અને $\\theta$ શોધો. ધ્રુવીય સ્વરૂપ $r(\\cos\\theta + i\\sin\\theta)$ છે.` 
+                    }; 
+                },
+                () => { 
+                    let p1 = rand(2,4);
+                    return { 
+                        en: `Simplify using De Moivre's Theorem: $\\frac{(\\cos ${p1}\\theta + i\\sin ${p1}\\theta)^{-3} \\cdot (\\cos 3\\theta - i\\sin 3\\theta)^{2}}{(\\cos \\theta + i\\sin \\theta)^{-12}}$`, 
+                        gu: `દ'મોવરના પ્રમેયથી સાદુરૂપ આપો: $\\frac{(\\cos ${p1}\\theta + i\\sin ${p1}\\theta)^{-3} \\cdot (\\cos 3\\theta - i\\sin 3\\theta)^{2}}{(\\cos \\theta + i\\sin \\theta)^{-12}}$`, 
+                        correct: `Convert to exponential powers`, distractors: [`Add all angles directly`, `Multiply all powers`, `Not Possible`], 
+                        solEn: `Convert to exponential powers: $e^{i(-3\\times ${p1}\\theta)} \\dots$ and simplify the exponents.`, solGu: `ઘાતાંકમાં ફેરવો અને સાદુરૂપ આપો.` 
+                    }; 
+                },
+                () => { 
+                    let x = rand(2, 5), y = rand(2, 5); let realPart = 2*x - y, imagPart = 2*y; 
+                    return { 
+                        en: `Find $x, y \\in \\mathbb{R}$ if $(2x-y) + 2yi = ${realPart} + ${imagPart}i$.`, gu: `જો $(2x-y) + 2yi = ${realPart} + ${imagPart}i$ હોય, તો વાસ્તવિક $x, y$ શોધો.`, 
+                        correct: `$x = ${x}, y = ${y}$`, distractors: [`$x = ${y}, y = ${x}$`, `$x = ${x+1}, y = ${y}$`, `$x = -${x}, y = -${y}$`], 
+                        solEn: `Equate imaginary parts: $2y = ${imagPart} \\implies y = ${y}$. Equate real parts: $2x - y = ${realPart} \\implies x = ${x}$.`, solGu: `વાસ્તવિક અને કાલ્પનિક ભાગ સરખાવતા.` 
+                    }; 
+                },
+                () => { 
+                    let a = rand(2, 4), b = rand(2, 4), c = rand(1, 3), d = rand(1, 3); 
+                    return { 
+                        en: `Find modulus of $Z = \\frac{${a}+${b}i}{${c}+${d}i}$.`, gu: `$Z = \\frac{${a}+${b}i}{${c}+${d}i}$ નો માનાંક શોધો.`, 
+                        correct: `$\\frac{\\sqrt{${a*a+b*b}}}{\\sqrt{${c*c+d*d}}}$`, distractors: [`$\\sqrt{\\frac{${a*a-b*b}}{${c*c-d*d}}}$`, `$\\frac{${a+b}}{${c+d}}$`, `$1$`], 
+                        solEn: `Use property $|\\frac{z_1}{z_2}| = \\frac{|z_1|}{|z_2|}$.`, solGu: `માનાંકના ગુણધર્મ $|z_1/z_2| = |z_1|/|z_2|$ નો ઉપયોગ કરો.` 
+                    }; 
+                },
+                () => { 
+                    let z1R = rand(2,5), z1I = rand(2,5), z2R = rand(2,5), z2I = rand(2,5);
+                    return { 
+                        en: `If $z_1 = ${z1R}+${z1I}i$ and $z_2 = ${z2R}-${z2I}i$, find $z_1 - 2z_2$.`, gu: `જો $z_1 = ${z1R}+${z1I}i$ અને $z_2 = ${z2R}-${z2I}i$ હોય, તો $z_1 - 2z_2$ શોધો.`, 
+                        correct: `${z1R - 2*z2R} + ${z1I + 2*z2I}i`, distractors: [`${z1R + 2*z2R} - ${z1I + 2*z2I}i`, `${z1R - z2R} + ${z1I + z2I}i`, `Not possible`], 
+                        solEn: `Multiply $z_2$ by 2, then subtract real from real and imaginary from imaginary.`, solGu: `વાસ્તવિક અને કાલ્પનિક ભાગની બાદબાકી કરો.` 
+                    }; 
+                },
+                () => { 
+                    let r = rand(2,4), i = rand(3,5);
+                    return { 
+                        en: `If $z = a+ib$, then prove $z \\cdot \\overline{z} = |z|^2$. Evaluate for $z=${r}+${i}i$.`, gu: `જો $z = a+ib$, તો $z \\cdot \\overline{z} = |z|^2$ ચકાસો. $z=${r}+${i}i$ માટે કિંમત શોધો.`, 
+                        correct: `$${r*r + i*i}$`, distractors: [`$${r*r - i*i}$`, `$\\sqrt{${r*r + i*i}}$`, `$-${r*r + i*i}$`], 
+                        solEn: `$(a+bi)(a-bi) = a^2 - b^2i^2 = a^2+b^2$. Here, $${r}^2+${i}^2 = ${r*r+i*i}$.`, solGu: `$(a+bi)(a-bi) = a^2 + b^2$. $|z|^2$ પણ સમાન થશે.` 
+                    }; 
+                },
+                () => { 
+                    let r = rand(3,5), i = rand(2,4);
+                    return { 
+                        en: `Find the multiplicative inverse of $Z = ${r}-${i}i$.`, gu: `$Z = ${r}-${i}i$ નો ગુણાકાર માટેનો વ્યસ્ત શોધો.`, 
+                        correct: `$\\frac{${r}}{${r*r+i*i}} + \\frac{${i}}{${r*r+i*i}}i$`, distractors: [`$\\frac{${r}}{${r*r+i*i}} - \\frac{${i}}{${r*r+i*i}}i`, `$\\frac{-${r}}{${r*r+i*i}} - \\frac{${i}}{${r*r+i*i}}i$`, `$${r}+${i}i$`], 
+                        solEn: `$Z^{-1} = \\frac{\\overline{Z}}{|Z|^2} = \\frac{${r}+${i}i}{${r}^2 + (-${i})^2}$.`, solGu: `વ્યસ્ત $Z^{-1} = \\frac{\\overline{Z}}{|Z|^2}$ સૂત્રનો ઉપયોગ કરો.` 
+                    }; 
+                }
             ]
         },
         "differentiation": {
@@ -385,8 +593,8 @@
                 () => { return { en: `$\\frac{d}{dx}(\\sec^2 x - \\tan^2 x) = $ ?`, gu: `$\\frac{d}{dx}(\\sec^2 x - \\tan^2 x) = $ ?`, correct: `$0$`, distractors: [`$1$`, `$2\\sec x \\tan x$`, `$-1$`], solEn: `Identity is 1. Derivative of 1 is 0.`, solGu: `નિત્યસમ 1 છે. વિકલન 0 થાય.`}; },
                 () => { return { en: `If $f(x) = \\log_e x$, then $f'(1) = $ ?`, gu: `જો $f(x) = \\log_e x$ હોય, તો $f'(1) = $ ?`, correct: `$1$`, distractors: [`$0$`, `$-1$`, `$e$`], solEn: `$f'(x) = 1/x$. Evaluating at $x=1$ gives 1.`, solGu: `f'(x) = 1/x.`}; },
                 () => { return { en: `$\\frac{d}{dx}(\\sin^{-1} x + \\cos^{-1} x) = $ ?`, gu: `$\\frac{d}{dx}(\\sin^{-1} x + \\cos^{-1} x) = $ ?`, correct: `$0$`, distractors: [`$\\pi/2$`, `$1$`, `$\\frac{2}{\\sqrt{1-x^2}}$`], solEn: `Identity $\\sin^{-1} x + \\cos^{-1} x = \\pi/2$ (Constant). Derivative is 0.`, solGu: `અચળ પદનું વિકલન શૂન્ય થાય.`}; },
-                () => { return { en: `If $x=at^2, y=2at$, then $\\frac{dy}{dx} = $ ?`, gu: `જો $x=at^2, y=2at$ હોય, તો $\\frac{dy}{dx} = $ ?`, correct: `$\\frac{1}{t}$`, distractors: [`$t$`, `$\\frac{1}{2t}$`, `$2t$`], solEn: `$\\frac{dy}{dt} / \\frac{dx}{dt} = 2a / 2at = 1/t$.`, solGu: `પ્રચલ સમીકરણનું વિકલન.`}; },
-                () => { return { en: `If $xy = c^2$, then $\\frac{dy}{dx} = $ ?`, gu: `જો $xy = c^2$ હોય, તો $\\frac{dy}{dx} = $ ?`, correct: `$-\\frac{y}{x}$`, distractors: [`$\\frac{y}{x}$`, `$-\\frac{x}{y}$`, `$\\frac{x}{y}$`], solEn: `Implicit diff: $1\\cdot y + x\\cdot y' = 0 \\implies y' = -y/x$.`, solGu: `ગુઢ વિધેયનું વિકલન.`}; },
+                () => { let a = rand(2,5); return { en: `If $x=${a}t^2, y=2${a}t$, then $\\frac{dy}{dx} = $ ?`, gu: `જો $x=${a}t^2, y=2${a}t$ હોય, તો $\\frac{dy}{dx} = $ ?`, correct: `$\\frac{1}{t}$`, distractors: [`$t$`, `$\\frac{1}{2t}$`, `$2t$`], solEn: `$\\frac{dy}{dt} / \\frac{dx}{dt} = 2a / 2at = 1/t$.`, solGu: `પ્રચલ સમીકરણનું વિકલન.`}; },
+                () => { let c = rand(2,5); return { en: `If $xy = ${c}^2$, then $\\frac{dy}{dx} = $ ?`, gu: `જો $xy = ${c}^2$ હોય, તો $\\frac{dy}{dx} = $ ?`, correct: `$-\\frac{y}{x}$`, distractors: [`$\\frac{y}{x}$`, `$-\\frac{x}{y}$`, `$\\frac{x}{y}$`], solEn: `Implicit diff: $1\\cdot y + x\\cdot y' = 0 \\implies y' = -y/x$.`, solGu: `ગુઢ વિધેયનું વિકલન.`}; },
                 () => { return { en: `$\\frac{d}{dx}(\\frac{u}{v}) = $ ?`, gu: `$\\frac{d}{dx}(\\frac{u}{v}) = $ ? (ભાગાકારનો નિયમ)`, correct: `$\\frac{v u' - u v'}{v^2}$`, distractors: [`$\\frac{u v' - v u'}{v^2}$`, `$u' v + u v'$`, `$\\frac{u'}{v'}$`], solEn: `Standard quotient rule formula.`, solGu: `ભાગાકારનો નિયમ.`}; }
             ],
             "examples": [
@@ -397,7 +605,7 @@
                 () => { return { en: `Find $\\frac{dy}{dx}$ if $y = \\frac{1+\\tan x}{1-\\tan x}$.`, gu: `જો $y = \\frac{1+\\tan x}{1-\\tan x}$ હોય, તો $\\frac{dy}{dx}$ શોધો.`, correct: `$\\frac{2\\sec^2 x}{(1-\\tan x)^2}$`, distractors: [`$\\frac{\\sec^2 x}{(1-\\tan x)^2}$`, `$\\frac{1+\\sec^2 x}{(1-\\tan x)^2}$`, `$\\frac{-2\\sec^2 x}{(1+\\tan x)^2}$`], solEn: `Use quotient rule $\\frac{v u' - u v'}{v^2}$. Numerator evaluates to $2\\sec^2 x$.`, solGu: `ભાગાકારના નિયમનો ઉપયોગ કરો. અંશ $2\\sec^2 x$ બનશે.` }; },
                 () => { let r = rand(2, 5); return { en: `If $x^2 + y^2 = ${r*r}$, find $\\frac{dy}{dx}$.`, gu: `જો $x^2 + y^2 = ${r*r}$ હોય, તો $\\frac{dy}{dx}$ શોધો.`, correct: `$-\\frac{x}{y}$`, distractors: [`$\\frac{x}{y}$`, `$-\\frac{y}{x}$`, `$\\frac{y}{x}$`], solEn: `Differentiate implicitly: $2x + 2y \\frac{dy}{dx} = 0 \\implies \\frac{dy}{dx} = -\\frac{x}{y}$.`, solGu: `બંને બાજુ વિકલન કરતા: $2x + 2y \\frac{dy}{dx} = 0$.` }; },
                 () => { return { en: `Find $\\frac{dy}{dx}$ if $x = a(\\theta - \\sin\\theta)$ and $y = a(1 - \\cos\\theta)$.`, gu: `જો $x = a(\\theta - \\sin\\theta)$ અને $y = a(1 - \\cos\\theta)$ હોય, તો $\\frac{dy}{dx}$ શોધો.`, correct: `$\\cot(\\theta/2)$`, distractors: [`$\\tan(\\theta/2)$`, `$-\\cot(\\theta/2)$`, `$\\sin\\theta$`], solEn: `$\\frac{dx}{d\\theta} = a(1-\\cos\\theta), \\frac{dy}{d\\theta} = a\\sin\\theta$. Divide: $\\frac{\\sin\\theta}{1-\\cos\\theta} = \\cot(\\theta/2)$.`, solGu: `પ્રચલ સમીકરણોનું વિકલન કરો અને ત્રિકોણમિતીય સૂત્રો વાપરો.` } },
-                () => { return { en: `If $y = A\\sin px + B\\cos px$, then $y_2 + p^2y = $ ?`, gu: `જો $y = A\\sin px + B\\cos px$, તો $y_2 + p^2y = $ ?`, correct: `$0$`, distractors: [`$p^2$`, `$2p$`, `$A+B$`], solEn: `$y_1 = p(A\\cos px - B\\sin px)$. $y_2 = -p^2(A\\sin px + B\\cos px) = -p^2 y$.`, solGu: `દ્વિતીય વિકલન મેળવીને સમીકરણમાં મૂકો.` } },
+                () => { let p = rand(2,4); return { en: `If $y = A\\sin ${p}x + B\\cos ${p}x$, then $y_2 + ${p*p}y = $ ?`, gu: `જો $y = A\\sin ${p}x + B\\cos ${p}x$, તો $y_2 + ${p*p}y = $ ?`, correct: `$0$`, distractors: [`$${p*p}$`, `$${2*p}$`, `$A+B$`], solEn: `$y_1 = ${p}(A\\cos ${p}x - B\\sin ${p}x)$. $y_2 = -${p*p}(A\\sin ${p}x + B\\cos ${p}x) = -${p*p} y$.`, solGu: `દ્વિતીય વિકલન મેળવીને સમીકરણમાં મૂકો.` } },
                 () => { return { en: `Evaluate $\\frac{dy}{dx}$ for $y = \\sqrt{\\sin x + \\sqrt{\\sin x + \\dots \\infty}}$`, gu: `જો $y = \\sqrt{\\sin x + \\sqrt{\\sin x + \\dots \\infty}}$ હોય તો $\\frac{dy}{dx}$ શોધો.`, correct: `$\\frac{\\cos x}{2y - 1}$`, distractors: [`$\\frac{\\sin x}{2y - 1}$`, `$\\frac{\\cos x}{y - 1}$`, `$\\frac{\\cos x}{2y + 1}$`], solEn: `Square both sides: $y^2 = \\sin x + y$. Diff implicitly: $2y y' = \\cos x + y' \\implies y'(2y-1) = \\cos x$.`, solGu: `બંને બાજુ વર્ગ કરો: $y^2 = \\sin x + y$. પછી વિકલન કરો.` } },
                 () => { return { en: `Find derivative of $f(x) = x^2$ using definition (First Principle).`, gu: `વ્યાખ્યાની મદદથી $f(x) = x^2$ નું વિકલન શોધો.`, correct: `$2x$`, distractors: [`$x$`, `$2$`, `$x^2$`], solEn: `$\\lim_{h\\to 0} \\frac{(x+h)^2 - x^2}{h} = \\lim_{h\\to 0} \\frac{2xh + h^2}{h} = 2x$.`, solGu: `વ્યાખ્યા $\\lim_{h\\to 0} \\frac{f(x+h) - f(x)}{h}$ નો ઉપયોગ કરો.` } }
             ]
@@ -406,11 +614,12 @@
             "mcq": [
                 () => { let n = rand(2, 4); return { en: `$\\int x^{-${n}} dx = \\dots + c$`, gu: `$\\int x^{-${n}} dx = \\dots + c$`, correct: `$\\frac{-1}{${n-1}x^{${n-1}}}$`, distractors: [`$\\frac{1}{${n}x^{${n}}}$`, `$\\log|x^{-${n}}|$`, `$\\frac{1}{x^{${n-1}}}$`], solEn: `Power rule.`, solGu: `ઘાતનો નિયમ.`}; },
                 () => { let a = rand(1, 4); return { en: `$\\int_{-${a}}^{${a}} x^3 dx = $ ?`, gu: `$\\int_{-${a}}^{${a}} x^3 dx = $ ?`, correct: `$0$`, distractors: [`$\\frac{${Math.pow(a, 4)}}{2}$`, `$${Math.pow(a, 4)}$`, `$-\\frac{${Math.pow(a, 4)}}{4}$`], solEn: `Odd function over symmetric interval equals 0.`, solGu: `અયુગ્મ વિધેય હોવાથી 0 થાય.`}; },
-                () => { return { en: `$\\int \\frac{1}{x^2+4} dx = \\dots + c$`, gu: `$\\int \\frac{1}{x^2+4} dx = \\dots + c$`, correct: `$\\frac{1}{2}\\tan^{-1}\\left(\\frac{x}{2}\\right)$`, distractors: [`$\\tan^{-1}\\left(\\frac{x}{2}\\right)$`, `$\\frac{1}{4}\\tan^{-1}\\left(\\frac{x}{4}\\right)$`, `$\\log(x^2+4)$`], solEn: `Standard form $\\int \\frac{1}{x^2+a^2} dx = \\frac{1}{a} \\tan^{-1}(x/a)$.`, solGu: `પ્રમાણિત સૂત્ર.`}; },
+                () => { let a = rand(2,4); let a2 = a*a; return { en: `$\\int \\frac{1}{x^2+${a2}} dx = \\dots + c$`, gu: `$\\int \\frac{1}{x^2+${a2}} dx = \\dots + c$`, correct: `$\\frac{1}{${a}}\\tan^{-1}\\left(\\frac{x}{${a}}\\right)$`, distractors: [`$\\tan^{-1}\\left(\\frac{x}{${a}}\\right)$`, `$\\frac{1}{${a2}}\\tan^{-1}\\left(\\frac{x}{${a2}}\\right)$`, `$\\log(x^2+${a2})$`], solEn: `Standard form $\\int \\frac{1}{x^2+a^2} dx = \\frac{1}{a} \\tan^{-1}(x/a)$.`, solGu: `પ્રમાણિત સૂત્ર.`}; },
                 () => { return { en: `$\\int \\sec x \\tan x dx = $ ?`, gu: `$\\int \\sec x \\tan x dx = $ ?`, correct: `$\\sec x + c$`, distractors: [`$\\tan x + c$`, `$\\log|\\sec x| + c$`, `$\\sec^2 x + c$`], solEn: `Standard integral.`, solGu: `પ્રમાણિત સંકલન.`}; },
                 () => { return { en: `$\\int e^x (\\sin x + \\cos x) dx = $ ?`, gu: `$\\int e^x (\\sin x + \\cos x) dx = $ ?`, correct: `$e^x \\sin x + c$`, distractors: [`$e^x \\cos x + c$`, `$e^x(\\sin x - \\cos x) + c$`, `$\\sin x + c$`], solEn: `Rule: $\\int e^x [f(x) + f'(x)] dx = e^x f(x) + c$.`, solGu: `પ્રમાણિત નિયમ મુજબ.`}; },
                 () => { return { en: `$\\int \\tan x dx = \\dots + c$`, gu: `$\\int \\tan x dx = \\dots + c$`, correct: `$\\log|\\sec x|$`, distractors: [`$\\log|\\cos x|$`, `$\\sec^2 x$`, `$\\sec x \\tan x$`], solEn: `Standard formula.`, solGu: `પ્રમાણિત સૂત્ર.`}; },
-                () => { return { en: `$\\int_0^{\\pi/2} \\sin x dx = $ ?`, gu: `$\\int_0^{\\pi/2} \\sin x dx = $ ?`, correct: `$1$`, distractors: [`$0$`, `$\\pi/2$`, `$-1$`], solEn: `$[-\\cos x]_0^{\\pi/2} = -0 - (-1) = 1$.`, solGu: `નિયત સંકલન ની કિંમત.`}; }
+                () => { return { en: `$\\int_0^{\\pi/2} \\sin x dx = $ ?`, gu: `$\\int_0^{\\pi/2} \\sin x dx = $ ?`, correct: `$1$`, distractors: [`$0$`, `$\\pi/2$`, `$-1$`], solEn: `$[-\\cos x]_0^{\\pi/2} = -0 - (-1) = 1$.`, solGu: `નિયત સંકલન ની કિંમત.`}; },
+                () => { let a=rand(3,6); return { en: `$\\int ${a}^x dx = \\dots + c$`, gu: `$\\int ${a}^x dx = \\dots + c$`, correct: `$\\frac{${a}^x}{\\log_e ${a}}$`, distractors: [`$${a}^x \\log_e ${a}$`, `$x \\cdot ${a}^{x-1}$`, `$${a}^x$`], solEn: `Standard exponential integral formula.`, solGu: `પ્રમાણિત સૂત્ર.`}; }
             ],
             "examples": [
                 () => { let a = rand(1, 2), b = rand(3, 4); let ansNum = Math.pow(b, 3) - Math.pow(a, 3); return { en: `Find the area bounded by curve $y = x^2$, X-axis, and lines $x = ${a}, x = ${b}$.`, gu: `વક્ર $y = x^2$, X-અક્ષ અને રેખાઓ $x = ${a}, x = ${b}$ વડે આવૃત પ્રદેશ નું ક્ષેત્રફળ શોધો.`, correct: `$\\frac{${ansNum}}{3}$`, distractors: [`$\\frac{${ansNum+2}}{3}$`, `$\\frac{${ansNum-1}}{2}$`, `$${ansNum}$`], solEn: `Area $= \\int_{${a}}^{${b}} x^2 dx = [\\frac{x^3}{3}]_{${a}}^{${b}} = \\frac{${ansNum}}{3}$.`, solGu: `ક્ષેત્રફળ $= \\int_{${a}}^{${b}} x^2 dx = [\\frac{x^3}{3}]_{${a}}^{${b}} = \\frac{${ansNum}}{3}$.` }; },
@@ -420,7 +629,7 @@
                 () => { return { en: `Evaluate: $\\int x e^x dx$`, gu: `સંકલન કરો: $\\int x e^x dx$`, correct: `$e^x(x - 1) + c$`, distractors: [`$x e^x + c$`, `$e^x(x + 1) + c$`, `$\\frac{x^2}{2} e^x + c$`], solEn: `Use Integration by parts. $u=x, v=e^x$. $x e^x - \\int(1 \\cdot e^x) dx = x e^x - e^x$.`, solGu: `ખંડશઃ સંકલનનો ઉપયોગ કરો. જવાબ $x e^x - e^x$ મળશે.` } },
                 () => { return { en: `Evaluate: $\\int \\frac{x^2}{1+x^6} dx$`, gu: `કિંમત શોધો: $\\int \\frac{x^2}{1+x^6} dx$`, correct: `$\\frac{1}{3}\\tan^{-1}(x^3) + c$`, distractors: [`$\\tan^{-1}(x^3) + c$`, `$\\frac{1}{3}\\log(1+x^6) + c$`, `$\\frac{1}{6}\\log(1+x^6) + c$`], solEn: `Substitute $t = x^3 \\implies dt = 3x^2 dx$. The integral becomes $\\frac{1}{3} \\int \\frac{dt}{1+t^2} = \\frac{1}{3}\\tan^{-1}(t)$.`, solGu: `$t = x^3$ ધારીને આદેશની રીત વાપરો.` }; },
                 () => { return { en: `Evaluate: $\\int \\frac{(\\log x)^2}{x} dx$`, gu: `કિંમત શોધો: $\\int \\frac{(\\log x)^2}{x} dx$`, correct: `$\\frac{(\\log x)^3}{3} + c$`, distractors: [`$\\frac{(\\log x)^2}{2} + c$`, `$x(\\log x)^2 + c$`, `$\\frac{1}{x^2} + c$`], solEn: `Substitute $t = \\log x \\implies dt = 1/x dx$. Integral is $\\int t^2 dt = t^3/3$.`, solGu: `$t = \\log x$ ધારીને આદેશની રીત વાપરો.` }; },
-                () => { return { en: `Evaluate: $\\int \\frac{2x+1}{(x+1)(x-3)} dx$`, gu: `સંકલન કરો: $\\int \\frac{2x+1}{(x+1)(x-3)} dx$`, correct: `$\\frac{1}{4}\\log|x+1| + \\frac{7}{4}\\log|x-3| + c$`, distractors: [`$\\frac{7}{4}\\log|x+1| + \\frac{1}{4}\\log|x-3| + c$`, `$\\log|x+1| + 2\\log|x-3| + c$`, `$\\frac{1}{2}\\log|x+1| + \\frac{3}{2}\\log|x-3| + c$`], solEn: `Use partial fractions: $\\frac{A}{x+1} + \\frac{B}{x-3}$. Find $A=1/4, B=7/4$ and integrate to $\\log$.`, solGu: `આંશિક અપૂર્ણાંક ની રીત વાપરી A અને B શોધો.` }; },
+                () => { let c=rand(1,3); return { en: `Evaluate: $\\int \\frac{2x+${c}}{(x+1)(x-3)} dx$`, gu: `સંકલન કરો: $\\int \\frac{2x+${c}}{(x+1)(x-3)} dx$`, correct: `Use Partial Fractions $A/(x+1) + B/(x-3)$`, distractors: [`Use Substitution $t = (x+1)(x-3)$`, `Use By Parts directly`, `Integration not possible`], solEn: `Use partial fractions: $\\frac{A}{x+1} + \\frac{B}{x-3}$. Find A, B and integrate to $\\log$.`, solGu: `આંશિક અપૂર્ણાંક ની રીત વાપરી A અને B શોધો.` }; },
                 () => { let a = rand(2, 5), b = rand(2, 5); return { en: `Evaluate: $\\int \\frac{${a} + ${b}\\cos x}{\\sin^2 x} dx$`, gu: `કિંમત શોધો: $\\int \\frac{${a} + ${b}\\cos x}{\\sin^2 x} dx$`, correct: `$-${a}\\cot x - ${b}\\csc x + c$`, distractors: [`$${a}\\tan x + ${b}\\sec x + c$`, `$-${a}\\csc x - ${b}\\cot x + c$`, `$\\frac{${a}}{\\sin x} + \\frac{${b}}{\\cos x} + c$`], solEn: `Split fraction: $\\int (${a}\\csc^2 x + ${b}\\csc x \\cot x) dx$. Integrate directly.`, solGu: `અપૂર્ણાંકને અલગ કરો અને સીધું સંકલન કરો.` }; },
                 () => { return { en: `Evaluate: $\\int_0^1 \\frac{e^{\\tan^{-1} x}}{1+x^2} dx$`, gu: `કિંમત શોધો: $\\int_0^1 \\frac{e^{\\tan^{-1} x}}{1+x^2} dx$`, correct: `$e^{\\pi/4} - 1$`, distractors: [`$e^{\\pi/2} - 1$`, `$e - 1$`, `$e^{\\pi/4}$`], solEn: `Put $t = \\tan^{-1} x \\implies dt = \\frac{1}{1+x^2} dx$. Limits: 0 to $\\pi/4$. $\\int_0^{\\pi/4} e^t dt$.`, solGu: `$t = \\tan^{-1} x$ ધારી લિમિટ બદલો.` } }
             ]
@@ -432,7 +641,8 @@
                 () => { return { en: `Degree of DE $\\sin\\left(\\frac{dy}{dx}\\right) + y = 0$ is:`, gu: `વિકલ સમીકરણ $\\sin\\left(\\frac{dy}{dx}\\right) + y = 0$ નું પરિમાણ:`, correct: `Not Defined`, distractors: [`1`, `2`, `0`], solEn: `Derivative inside transcendental function means degree is not defined.`, solGu: `વિકલન ત્રિકોણમિતીય વિધેયમાં હોવાથી પરિમાણ અવ્યાખ્યાયિત છે.`}; },
                 () => { let k = rand(2, 5); return { en: `Integrating Factor of $\\frac{dy}{dx} + ${k}y = e^x$ is:`, gu: `$\\frac{dy}{dx} + ${k}y = e^x$ નો સંકલ્યકારક અવયવ (I.F.):`, correct: `$e^{${k}x}$`, distractors: [`$e^{x}$`, `$e^{-${k}x}$`, `$${k}e^x$`], solEn: `I.F. $= e^{\\int ${k} dx} = e^{${k}x}$.`, solGu: `I.F. ના સૂત્ર મુજબ.`}; },
                 () => { return { en: `Integrating Factor of $\\frac{dy}{dx} + \\frac{y}{x} = x^2$ is:`, gu: `$\\frac{dy}{dx} + \\frac{y}{x} = x^2$ નો સંકલ્યકારક અવયવ (I.F.):`, correct: `$x$`, distractors: [`$\\log x$`, `$1/x$`, `$x^2$`], solEn: `I.F. $= e^{\\int (1/x) dx} = e^{\\log x} = x$.`, solGu: `I.F. ના સૂત્ર મુજબ.`}; },
-                () => { return { en: `Degree of $\\left(1+(\\frac{dy}{dx})^2\\right)^{3/2} = \\frac{d^2y}{dx^2}$ is:`, gu: `$\\left(1+(\\frac{dy}{dx})^2\\right)^{3/2} = \\frac{d^2y}{dx^2}$ નું પરિમાણ:`, correct: `2`, distractors: [`1`, `3/2`, `3`], solEn: `Square both sides to remove fractional power: $(...)^3 = (y'')^2$. Power of highest derivative is 2.`, solGu: `બંને બાજુ વર્ગ કરી અપૂર્ણાંક ઘાત દૂર કરો.`} }
+                () => { return { en: `Degree of $\\left(1+(\\frac{dy}{dx})^2\\right)^{3/2} = \\frac{d^2y}{dx^2}$ is:`, gu: `$\\left(1+(\\frac{dy}{dx})^2\\right)^{3/2} = \\frac{d^2y}{dx^2}$ નું પરિમાણ:`, correct: `2`, distractors: [`1`, `3/2`, `3`], solEn: `Square both sides to remove fractional power: $(...)^3 = (y'')^2$. Power of highest derivative is 2.`, solGu: `બંને બાજુ વર્ગ કરી અપૂર્ણાંક ઘાત દૂર કરો.`} },
+                () => { return { en: `Integrating factor for linear DE $\\frac{dy}{dx} + P y = Q$ is given by:`, gu: `સુરેખ વિકલ સમીકરણ $\\frac{dy}{dx} + P y = Q$ માટે સંકલ્યકારક અવયવ:`, correct: `$e^{\\int P dx}$`, distractors: [`$e^{\\int Q dx}$`, `$\\int P dx$`, `$e^{\\int P dy}$`], solEn: `Standard formula for Integrating Factor.`, solGu: `સંકલ્યકારક અવયવનું સૂત્ર.`} }
             ],
             "examples": [
                 () => { return { en: `Solve differential equation: $x dy + y dx = 0$.`, gu: `વિકલ સમીકરણ ઉકેલો: $x dy + y dx = 0$.`, correct: `$xy = c$`, distractors: [`$x/y = c$`, `$x+y = c$`, `$x^2+y^2=c$`], solEn: `Separate: $\\frac{dy}{y} + \\frac{dx}{x} = 0$. Integrate: $\\log y + \\log x = \\log c \\implies xy = c$.`, solGu: `$xy$ વડે ભાગતા અને ચલ અલગ કરી સંકલન કરતા $xy=c$ મળે.` }; },
@@ -440,7 +650,8 @@
                 () => { return { en: `Solve Linear DE: $\\frac{dy}{dx} + \\frac{y}{x} = x^2$.`, gu: `સુરેખ વિકલ સમીકરણ ઉકેલો: $\\frac{dy}{dx} + \\frac{y}{x} = x^2$.`, correct: `$xy = \\frac{x^4}{4} + c$`, distractors: [`$y/x = \\frac{x^3}{3} + c$`, `$xy = \\frac{x^3}{3} + c$`, `$xy = x^4 + c$`], solEn: `I.F. $= e^{\\int (1/x) dx} = x$. Solution: $y(x) = \\int x^2(x) dx = x^4/4 + c$.`, solGu: `I.F. શોધો અને સૂત્ર વાપરો.` }; },
                 () => { return { en: `Solve: $\\frac{dy}{dx} + \\frac{y}{x} = e^x$, given $y(1) = e$.`, gu: `ઉકેલો: $\\frac{dy}{dx} + \\frac{y}{x} = e^x$, આપેલ છે $y(1) = e$.`, correct: `$xy = x e^x - e^x + e$`, distractors: [`$xy = e^x + c$`, `$y = e^x - x e^x + c$`, `$xy = x e^x + e$`], solEn: `I.F. $= x$. $xy = \\int x e^x dx = x e^x - e^x + c$. Put $x=1, y=e \\implies c=e$.`, solGu: `I.F. $= x$. સંકલન કરીને x=1 અને y=e મૂકો.` } },
                 () => { return { en: `Solve: $(x+y+1)^2 \\frac{dy}{dx} = 1$.`, gu: `વિકલ સમીકરણ ઉકેલો: $(x+y+1)^2 \\frac{dy}{dx} = 1$.`, correct: `$\\tan^{-1}(x+y+1) = x + c$`, distractors: [`$\\log(x+y+1) = x + c$`, `$\\frac{(x+y+1)^3}{3} = x + c$`, `$\\sec^2(x+y+1) = x + c$`], solEn: `Put $v = x+y+1 \\implies \\frac{dv}{dx} = 1 + \\frac{dy}{dx}$. So $\\frac{dv}{dx} = \\frac{v^2+1}{v^2}$. Integrate to get $\\tan^{-1}$.`, solGu: `$v = x+y+1$ ધારીને ચલ અલગ કરો.` } },
-                () => { return { en: `Solve: $\\frac{dy}{dx} = e^{x-y}$.`, gu: `ઉકેલો: $\\frac{dy}{dx} = e^{x-y}$.`, correct: `$e^y = e^x + c$`, distractors: [`$e^{-y} = e^{-x} + c$`, `$e^{y-x} = c$`, `$y = e^x + c$`], solEn: `Write as $\\frac{dy}{dx} = \\frac{e^x}{e^y}$. Cross multiply: $e^y dy = e^x dx$. Integrate.`, solGu: `ચલ અલગ કરો: $e^y dy = e^x dx$ અને સંકલન કરો.` } }
+                () => { return { en: `Solve: $\\frac{dy}{dx} = e^{x-y}$.`, gu: `ઉકેલો: $\\frac{dy}{dx} = e^{x-y}$.`, correct: `$e^y = e^x + c$`, distractors: [`$e^{-y} = e^{-x} + c$`, `$e^{y-x} = c$`, `$y = e^x + c$`], solEn: `Write as $\\frac{dy}{dx} = \\frac{e^x}{e^y}$. Cross multiply: $e^y dy = e^x dx$. Integrate.`, solGu: `ચલ અલગ કરો: $e^y dy = e^x dx$ અને સંકલન કરો.` } },
+                () => { let k = rand(2,4); return { en: `Find Integrating Factor for $\\cos x \\frac{dy}{dx} + y = \\sin x$.`, gu: `$\\cos x \\frac{dy}{dx} + y = \\sin x$ નો સંકલ્યકારક અવયવ શોધો.`, correct: `$\\sec x + \\tan x$`, distractors: [`$e^{\\sin x}$`, `$\\log(\\cos x)$`, `$\\tan x$`], solEn: `Divide by $\\cos x$: $\\frac{dy}{dx} + y\\sec x = \\tan x$. I.F. $= e^{\\int \\sec x dx} = e^{\\log(\\sec x + \\tan x)} = \\sec x + \\tan x$.`, solGu: `$\\cos x$ વડે ભાગીને I.F. મેળવો.` } }
             ]
         },
         "statistics": {
@@ -449,7 +660,8 @@
                 () => { let n1=rand(4,8), n2=rand(4,8), n3=rand(4,8), mean=rand(6,9); let missing = (mean*4) - (n1+n2+n3); return { en: `If mean of ${n1}, ${n2}, ${n3}, $a$ is ${mean}, then $a=$?`, gu: `જો ${n1}, ${n2}, ${n3}, $a$ નો મધ્યક ${mean} હોય, તો $a=$?`, correct: `$${missing}$`, distractors: [`$${missing+2}$`, `$${mean}$`, `$${missing-1}$`], solEn: `Sum = $4 \\times ${mean}$. So $a = ${mean*4} - (${n1+n2+n3})$.`, solGu: `સરવાળો મેળવીને કિંમત શોધો.`}; },
                 () => { return { en: `Coefficient of Variation (CV) formula is:`, gu: `ચલનાંક (CV) નું સૂત્ર:`, correct: `$\\frac{\\sigma}{\\bar{x}} \\times 100$`, distractors: [`$\\frac{\\bar{x}}{\\sigma} \\times 100$`, `$\\frac{\\sigma^2}{\\bar{x}} \\times 100$`, `$\\frac{\\sigma}{\\bar{x}}$`], solEn: `Standard formula for CV.`, solGu: `પ્રમાણિત સૂત્ર.`} },
                 () => { return { en: `Formula for Mean Deviation from Mean is:`, gu: `સરેરાશ વિચલન નું સૂત્ર:`, correct: `$\\frac{\\Sigma |x_i - \\bar{x}|}{n}$`, distractors: [`$\\frac{\\Sigma (x_i - \\bar{x})^2}{n}$`, `$\\frac{\\Sigma x_i}{n}$`, `$\\sqrt{\\frac{\\Sigma |x_i - \\bar{x}|}{n}}$`], solEn: `Standard formula.`, solGu: `પ્રમાણિત સૂત્ર.`} },
-                () => { return { en: `Variance is equal to:`, gu: `વિચરણ એ કોની બરાબર છે?`, correct: `$(\\text{Standard Deviation})^2$`, distractors: [`$\\sqrt{\\text{Standard Deviation}}$`, `$\\text{Mean Deviation}$`, `$\\frac{\\text{Standard Deviation}}{\\text{Mean}}$`], solEn: `Variance is denoted by $\\sigma^2$.`, solGu: `વિચરણ = (પ્રમાણિત વિચલન)².`} }
+                () => { return { en: `Variance is equal to:`, gu: `વિચરણ એ કોની બરાબર છે?`, correct: `$(\\text{Standard Deviation})^2$`, distractors: [`$\\sqrt{\\text{Standard Deviation}}$`, `$\\text{Mean Deviation}$`, `$\\frac{\\text{Standard Deviation}}{\\text{Mean}}$`], solEn: `Variance is denoted by $\\sigma^2$.`, solGu: `વિચરણ = (પ્રમાણિત વિચલન)².`} },
+                () => { let x = rand(2,6); return { en: `If variance of a data is ${x*x}, its standard deviation is:`, gu: `જો માહિતીનું વિચરણ ${x*x} હોય તો પ્રમાણિત વિચલન:`, correct: `$${x}$`, distractors: [`$${x*x*x}$`, `$${x*2}$`, `$${x+1}$`], solEn: `SD is square root of variance.`, solGu: `વિચરણનું વર્ગમૂળ.`} }
             ],
             "examples": [
                 () => { let d = Array.from({length: 5}, () => rand(4, 12)); let sum = d.reduce((a,b)=>a+b, 0); return { en: `Find the mean of the data: ${d.join(', ')}`, gu: `માહિતીનો મધ્યક શોધો: ${d.join(', ')}`, correct: `$${sum/5}$`, distractors: [`$${(sum/5 + 0.5).toFixed(1)}$`, `$${sum/4}$`, `$${sum}$`], solEn: `Mean = $\\frac{\\Sigma x}{n} = \\frac{${sum}}{5} = ${sum/5}$.`, solGu: `મધ્યક $\\bar{x} = \\frac{\\Sigma x}{n} = \\frac{${sum}}{5} = ${sum/5}$.` }; },
@@ -489,7 +701,7 @@
             let isDuplicate = true;
 
             // STRICT ANTI-DUPLICATION ENGINE
-            while (isDuplicate && attempts < 100) {
+            while (isDuplicate && attempts < 150) {
                 const genFunc = availableGenerators[(generatorIndex + attempts) % availableGenerators.length];
                 qData = genFunc();
                 
