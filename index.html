@@ -78,6 +78,52 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        /* --- NEW: Student Info Section Styling --- */
+        .student-info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: #e0f2fe; /* Light blue background for contrast */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #7dd3fc;
+        }
+        .info-group {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-size: 1.05em;
+        }
+        input[type="text"] {
+            padding: 12px;
+            font-size: 1.05em;
+            border-radius: 6px;
+            border: 1px solid #64748b;
+            width: 100%;
+            font-family: inherit;
+        }
+        input[type="text"]:disabled {
+            background-color: transparent;
+            color: var(--primary);
+            font-weight: bold;
+            border-color: transparent;
+            padding-left: 0;
+        }
+        .timestamp-display {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--secondary);
+            padding: 10px 0;
+        }
+        /* ----------------------------------------- */
+
         .controls {
             display: flex;
             flex-wrap: wrap;
@@ -105,7 +151,7 @@
             font-size: 1.05em;
             border-radius: 6px;
             border: 1px solid #64748b;
-            width: 100%; 
+            width: 100%;
         }
         button.primary-btn {
             background: var(--accent);
@@ -194,7 +240,7 @@
             font-size: 1.05em;
             line-height: 1.8;
             border-top: 2px dashed #cbd5e1;
-            overflow-x: auto; 
+            overflow-x: auto;
         }
         .solution-correct { background-color: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
         .solution-incorrect { background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
@@ -240,7 +286,7 @@
             h1 { font-size: 1.6em; }
             .header-section { padding-bottom: 10px; margin-bottom: 15px; }
             #timer-display { position: static; display: inline-block; margin-top: 10px; font-size: 1.1em; }
-            .controls { padding: 15px; gap: 15px; margin-bottom: 25px; }
+            .controls, .student-info-section { padding: 15px; gap: 15px; margin-bottom: 25px; }
             .question-block { padding: 15px; margin-bottom: 20px; font-size: 1.05em; }
             .options { grid-template-columns: 1fr; gap: 10px; }
             .options label { padding: 12px; font-size: 1em; }
@@ -254,6 +300,12 @@
             .container { box-shadow: none; max-width: 100%; margin: 0; padding: 0; }
             .controls, .action-buttons-container, .footer, #timer-display { display: none !important; }
             .header-section { border-bottom: 2px solid #000; }
+            
+            /* Print rules for Student Details */
+            .student-info-section { background: #fff; border: 2px solid #000; padding: 15px; margin-bottom: 20px; box-shadow: none; }
+            .student-info-section input[type="text"] { border: none; border-bottom: 1px dashed #000; border-radius: 0; }
+            .info-label { color: #000; }
+            
             .question-block { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; margin-bottom: 20px; padding: 15px; overflow-x: visible;}
             .options label { border: 1px solid #ccc; background: #fff; padding: 10px;}
             #summary-card { border: 1px solid #ccc; background: #fff; color: #000; }
@@ -269,6 +321,20 @@
         <div id="timer-display">⏱ 00:00</div>
     </div>
     
+    <div class="student-info-section">
+        <div class="info-group">
+            <label class="info-label" for="studentName">Student Name:</label>
+            <input type="text" id="studentName" placeholder="Enter your full name (Alphabets only)">
+        </div>
+        <div class="info-group">
+            <label class="info-label" for="enrollmentNo">Enrollment No.:</label>
+            <input type="text" id="enrollmentNo" placeholder="Enter 12-digit enrollment number" maxlength="12">
+        </div>
+        <div class="info-group" id="timestamp-group" style="display: none; justify-content: flex-end;">
+            <label class="info-label">Test Completed On:</label>
+            <div id="test-timestamp" class="timestamp-display"></div>
+        </div>
+    </div>
     <div class="controls">
         <div class="control-group">
             <label class="control-label" for="topicSelect">1. Select Unit (યુનિટ પસંદ કરો):</label>
@@ -352,11 +418,12 @@
         }
     }
 
+    // Question Generators Array - Kept Exactly as Original
     const generators = {
         "matrix": {
             "mcq": [
                 () => { 
-                    let r1 = rand(2, 8), c1 = rand(2, 8), c2 = rand(2, 8); 
+                    let r1 = rand(2, 8), c1 = rand(2, 8), c2 = rand(2, 8);
                     while(c2 === c1 || c2 === r1) c2 = rand(2,8);
                     return { 
                         en: `If matrix $A$ is $${r1} \\times ${c1}$ and $B$ is $${c1} \\times ${c2}$, what is the order of $AB$?`, 
@@ -365,7 +432,7 @@
                         distractors: [`$${c1} \\times ${r1}$`, `$${c1} \\times ${c2}$`, `Not possible`], 
                         solEn: `<div class="step-container"><span class="step-title">Rule:</span> $(m \\times n) \\times (n \\times p) = m \\times p$. Here $(${r1} \\times ${c1}) \\times (${c1} \\times ${c2}) = ${r1} \\times ${c2}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">નિયમ:</span> શ્રેણિક ગુણાકારનો નિયમ.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let a = rand(1,9), b = rand(1,9), c = rand(1,9), d = rand(1,9);
@@ -391,17 +458,17 @@
                     };
                 },
                 () => { 
-                    let x = rand(2, 15), y = rand(2, 15), c1 = rand(1,9); 
+                    let x = rand(2, 15), y = rand(2, 15), c1 = rand(1,9);
                     return { 
                         en: `If $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$, find $x+y+${c1}$.`, 
                         gu: `જો $\\begin{bmatrix} x-1 \\\\ y+2 \\end{bmatrix} = \\begin{bmatrix} ${x-1} \\\\ ${y+2} \\end{bmatrix}$ હોય, તો $x+y+${c1}$ શોધો.`, 
                         correct: `$${x+y+c1}$`, distractors: [`$${x+y+c1+2}$`, `$${x-y+c1}$`, `$${x+y-1}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Equate elements: $x-1=${x-1}\\implies x=${x}$. $y+2=${y+2}\\implies y=${y}$. Sum is ${x+y+c1}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ઘટકો સરખાવો અને સરવાળો કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let a = rand(-9, 9), b = rand(-9, 9), c = rand(-9, 9), d = rand(-9, 9); 
+                    let a = rand(-9, 9), b = rand(-9, 9), c = rand(-9, 9), d = rand(-9, 9);
                     return { 
                         en: `Find the adjoint of $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$.`, 
                         gu: `$A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & ${d} \\end{bmatrix}$ નો adj(A) શોધો.`, 
@@ -409,17 +476,17 @@
                         distractors: [`$\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${-a} & ${-b} \\\\ ${-c} & ${-d} \\end{bmatrix}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Rule:</span> Swap main diagonal (${a}, ${d}), flip signs of off-diagonal (${b}, ${c}).</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">નિયમ:</span> મુખ્ય વિકર્ણ બદલો, અન્યના ચિહ્નો બદલો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let k = rand(2, 9), a = rand(1, 9), d = rand(1, 9); 
+                    let k = rand(2, 9), a = rand(1, 9), d = rand(1, 9);
                     return { 
                         en: `If $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$, then $${k}A =$ ?`, 
                         gu: `જો $A = \\begin{bmatrix} ${a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$ હોય, તો $${k}A =$ ?`, 
                         correct: `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`, 
                         distractors: [`$\\begin{bmatrix} ${a+k} & 0 \\\\ 0 & ${d+k} \\end{bmatrix}$`, `$\\begin{bmatrix} ${k*a} & 0 \\\\ 0 & ${d} \\end{bmatrix}$`, `$\\begin{bmatrix} ${a} & 0 \\\\ 0 & ${k*d} \\end{bmatrix}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Multiply every element by ${k}.</div>`, solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> દરેક ઘટકને ${k}$ વડે ગુણો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let n = rand(2,9);
@@ -428,7 +495,7 @@
                         gu: `જો $${n} \\times ${n}$ ચોરસ શ્રેણિક $A$ માટે $|A| = 0$ હોય, તો $A$ ને શું કહેવાય?`, 
                         correct: `Singular Matrix`, distractors: [`Non-singular Matrix`, `Identity Matrix`, `Symmetric Matrix`], 
                         solEn: `<div class="step-container"><span class="step-title">Definition:</span> $|A| = 0$ means the matrix is Singular.</div>`, solGu: `<div class="step-container"><span class="step-title">વ્યાખ્યા:</span> અસામાન્ય શ્રેણિકની વ્યાખ્યા.</div>` 
-                    }; 
+                    };
                 }
             ],
             "examples": [
@@ -473,7 +540,7 @@
                     };
                 },
                 () => { 
-                    let a = rand(1, 4), b = rand(1, 4), c = rand(2, 5), d = rand(4, 7); 
+                    let a = rand(1, 4), b = rand(1, 4), c = rand(2, 5), d = rand(4, 7);
                     let det = (a*d) - (b*c); 
                     if(det === 0) { d++; det = (a*d) - (b*c); } 
                     return { 
@@ -483,7 +550,7 @@
                         distractors: [`$\\frac{1}{${det}}\\begin{bmatrix} ${a} & ${-b} \\\\ ${-c} & ${d} \\end{bmatrix}$`, `$\\frac{1}{${det+1}}\\begin{bmatrix} ${d} & ${b} \\\\ ${c} & ${a} \\end{bmatrix}$`, `$\\begin{bmatrix} ${d} & ${-b} \\\\ ${-c} & ${a} \\end{bmatrix}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Determinant</span><br>$|A| = (${a})(${d}) - (${b})(${c}) = ${det}$.</div><div class="step-container"><span class="step-title">Step 2: Formula</span><br>$A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> નિશ્ચાયક $|A| = ${det}$. $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ વાપરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let a = rand(1, 8), b = rand(1, 8), c = rand(1, 8);
@@ -494,12 +561,12 @@
                         distractors: [`$\\begin{bmatrix} 1 & 0 & 0 \\\\ ${a} & 1 & 0 \\\\ ${a*c + b} & ${c} & 1 \\end{bmatrix}$`, `$\\begin{bmatrix} 1 & 0 & 0 \\\\ -${a} & 1 & 0 \\\\ ${b - a*c} & -${c} & 1 \\end{bmatrix}$`, `$\\begin{bmatrix} 1 & -${a} & ${a*c - b} \\\\ 0 & 1 & -${c} \\\\ 0 & 0 & 1 \\end{bmatrix}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Determinant & Adjoint</span><br>Find the determinant of the 3x3 matrix ($|A|=1$). Then calculate the 9 cofactors to build the cofactor matrix. Transpose it to get the Adjoint. Finally, $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રથમ નિશ્ચાયક |A| શોધો. પછી સહઅવયવજ શ્રેણિક શોધીને $A^{-1} = \\frac{1}{|A|} \\text{adj}(A)$ સૂત્ર વાપરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let x = rand(1, 6), y = rand(1, 6); 
-                    let a = rand(2, 6), b = rand(1, 6), c = rand(1, 6), d = rand(2, 6); 
-                    let e = a*x + b*y, f = c*x - d*y; 
+                    let x = rand(1, 6), y = rand(1, 6);
+                    let a = rand(2, 6), b = rand(1, 6), c = rand(1, 6), d = rand(2, 6);
+                    let e = a*x + b*y, f = c*x - d*y;
                     return { 
                         en: `Solve using matrix method: $${a}x + ${b}y = ${e}$ and $${c}x - ${d}y = ${f}$.`, 
                         gu: `શ્રેણિક ની મદદ થી સમીકરણ $${a}x + ${b}y = ${e}$ અને $${c}x - ${d}y = ${f}$ ઉકેલો.`, 
@@ -507,7 +574,7 @@
                         distractors: [`$x = ${y}, y = ${x}$`, `$x = -${x}, y = ${y}$`, `$x = ${x+1}, y = ${y-1}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Matrix Form</span><br>Write as $AX = B$ where $A = \\begin{bmatrix} ${a} & ${b} \\\\ ${c} & -${d} \\end{bmatrix}$, $X = \\begin{bmatrix} x \\\\ y \\end{bmatrix}$, $B = \\begin{bmatrix} ${e} \\\\ ${f} \\end{bmatrix}$.</div><div class="step-container"><span class="step-title">Step 2: Solution</span><br>Calculate $X = A^{-1}B$ to get values of x and y.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> $AX = B$ સ્વરૂપમાં લખીને $X = A^{-1}B$ નો ઉપયોગ કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let a = rand(1, 6), b = rand(1, 6), c = rand(1, 6), d = rand(1, 6);
@@ -520,14 +587,14 @@
                         distractors: [`$\\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$`, `$\\begin{bmatrix} ${trace} & 0 \\\\ 0 & ${det} \\end{bmatrix}$`, `$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Characteristic Equation</span><br>For any 2x2 matrix, $A^2 - (\\text{Trace})A + (\\text{Det})I = 0$. Since Trace=${trace} and Det=${det}, substituting these directly proves it equals the Zero matrix.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> આ લાક્ષણિક સમીકરણ $A^2 - (Trace)A + (Det)I = 0$ છે, તેથી હંમેશા શૂન્ય શ્રેણિક મળશે.</div>` 
-                    }; 
+                    };
                 }
             ]
         },
         "complex": {
             "mcq": [
                 () => { 
-                    let a = rand(3, 12), b = rand(3, 12); 
+                    let a = rand(3, 12), b = rand(3, 12);
                     return { 
                         en: `Find the modulus $|Z|$ of $Z = ${a} + ${b}i$.`, 
                         gu: `$Z = ${a} + ${b}i$ નો માનાંક $|Z|$ શોધો:`, 
@@ -535,40 +602,43 @@
                         distractors: [`$${a+b}$`, `$\\sqrt{${a*a - b*b}}$`, `$${a*a+b*b}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Formula:</span> $|Z| = \\sqrt{x^2+y^2} = \\sqrt{${a}^2+${b}^2} = \\sqrt{${a*a+b*b}}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">સૂત્ર:</span> $|Z| = \\sqrt{x^2+y^2}$ વાપરો.</div>`
-                    }; 
+                    };
                 },
                 () => { 
-                    let a = rand(2, 15), b = rand(2, 15); while(a===b) b=rand(2,15); 
+                    let a = rand(2, 15), b = rand(2, 15);
+                    while(a===b) b=rand(2,15); 
                     return { 
                         en: `Real part of $Z = ${a} + ${b}i$ is:`, 
                         gu: `$Z = ${a} + ${b}i$ નો વાસ્તવિક ભાગ:`, 
                         correct: `$${a}$`, distractors: [`$${b}$`, `$${a}i$`, `$${a+b}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> The term without 'i' is real.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> 'i' વગરનો ભાગ.</div>`
-                    }; 
+                    };
                 },
                 () => { 
-                    let a = rand(2, 15), b = rand(2, 15); while(a===b) b=rand(2,15); 
+                    let a = rand(2, 15), b = rand(2, 15);
+                    while(a===b) b=rand(2,15); 
                     return { 
                         en: `Imaginary part of $Z = ${a} - ${b}i$ is:`, 
                         gu: `$Z = ${a} - ${b}i$ નો કાલ્પનિક ભાગ:`, 
                         correct: `$-${b}$`, distractors: [`$${b}$`, `$${a}$`, `$-${b}i$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> The coefficient of 'i', including sign.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> 'i' નો સહગુણક ચિહ્ન સાથે.</div>`
-                    }; 
+                    };
                 },
                 () => { 
-                    let a = rand(2, 15), b = rand(2, 15); 
+                    let a = rand(2, 15), b = rand(2, 15);
                     return { 
                         en: `Conjugate of $Z = ${a} - ${b}i$ is:`, 
                         gu: `$Z = ${a} - ${b}i$ ની અનુબદ્ધ સંખ્યા:`, 
                         correct: `$${a} + ${b}i$`, distractors: [`$-${a} - ${b}i$`, `$-${a} + ${b}i$`, `$${b} - ${a}i$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Change sign of imaginary part.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> કાલ્પનિક ભાગનું ચિહ્ન બદલો.</div>`
-                    }; 
+                    };
                 },
                 () => { 
-                    let n = rand(1, 15); let type=rand(1,4); let power, ans;
+                    let n = rand(1, 15);
+                    let type=rand(1,4); let power, ans;
                     if(type===1){ power = 4*n; ans = `1`; }
                     else if(type===2){ power = 4*n + 1; ans = `i`; }
                     else if(type===3){ power = 4*n + 2; ans = `-1`; }
@@ -579,32 +649,33 @@
                         correct: `$${ans}$`, distractors: dists.map(d=>`$${d}$`), 
                         solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Divide power by 4. Remainder is ${power%4}. $i^0=1, i^1=i, i^2=-1, i^3=-i$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ઘાતને 4 વડે ભાગતા શેષ ${power%4} વધે છે.</div>`
-                    }; 
+                    };
                 }
             ],
             "examples": [
                 () => { 
-                    const pairs = [[3,4, 2,1, "+"], [8,6, 3,1, "+"], [7,24, 4,3, "+"], [5,12, 3,2, "+"], [3,-4, 2,1, "-"], [8,-6, 3,1, "-"], [15,8, 4,1, "+"]]; 
-                    let [R, I, a, b, sign] = pairs[rand(0, pairs.length-1)]; let formattedI = I > 0 ? `+${I}i` : `${I}i`; 
+                    const pairs = [[3,4, 2,1, "+"], [8,6, 3,1, "+"], [7,24, 4,3, "+"], [5,12, 3,2, "+"], [3,-4, 2,1, "-"], [8,-6, 3,1, "-"], [15,8, 4,1, "+"]];
+                    let [R, I, a, b, sign] = pairs[rand(0, pairs.length-1)]; let formattedI = I > 0 ? `+${I}i` : `${I}i`;
                     return { 
                         en: `Find the square root of $${R} ${formattedI}$.`, gu: `સંકર સંખ્યા $${R} ${formattedI}$ નું વર્ગમૂળ શોધો.`, 
                         correct: `$\\pm(${a} ${sign} ${b}i)$`, distractors: [`$\\pm(${a+1} ${sign} ${b}i)$`, `$\\pm(${b} ${sign} ${a}i)$`, `$\\pm(${a} ${sign} ${b+1}i)$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Find Modulus</span><br>$|Z| = \\sqrt{${R}^2 + ${I}^2}$.</div><div class="step-container"><span class="step-title">Step 2: Formula</span><br>$\\pm\\left( \\sqrt{\\frac{|Z| + x}{2}} + i \\cdot \\text{sgn}(y) \\sqrt{\\frac{|Z| - x}{2}} \\right)$. Substitute $x=${R}, y=${I}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રથમ માનાંક $|Z|$ શોધો. પછી સંકર સંખ્યાના વર્ગમૂળના સીધા સૂત્રનો ઉપયોગ કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let a = rand(2, 9), b = rand(2, 9), c = rand(1, 6), d = rand(1, 6); 
-                    let real = a*c - b*d, imag = a*d + b*c; 
+                    let a = rand(2, 9), b = rand(2, 9), c = rand(1, 6), d = rand(1, 6);
+                    let real = a*c - b*d, imag = a*d + b*c;
                     return { 
                         en: `Simplify: $(${a} + ${b}i)(${c} + ${d}i)$.`, gu: `સાદુરૂપ આપો: $(${a} + ${b}i)(${c} + ${d}i)$.`, 
                         correct: `$${real} + ${imag}i$`, distractors: [`$${real} - ${imag}i$`, `$${real+2} + ${imag}i$`, `$${a*c} + ${b*d}i$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Expand</span><br>Multiply out: $${a*c} + ${a*d}i + ${b*c}i + ${b*d}i^2$. Remember $i^2 = -1$, so $${b*d}i^2 = -${b*d}$. Combine like terms.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ગુણાકાર કરો અને $i^2 = -1$ નો ઉપયોગ કરી વાસ્તવિક અને કાલ્પનિક પદ ભેગા કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let x = rand(2,9); let num = x*x + 9;
+                    let x = rand(2,9);
+                    let num = x*x + 9;
                     let rP = 4*x - 9, iP = -3*x - 12;
                     let sign = iP < 0 ? '-' : '+';
                     let absIP = Math.abs(iP);
@@ -615,7 +686,7 @@
                         distractors: [`$\\frac{${rP}}{${num}} ${sign === '-' ? '+' : '-'} \\frac{${absIP}}{${num}}i$`, `$\\frac{${4*x+9}}{${num}} - \\frac{${3*x-12}}{${num}}i$`, `$\\frac{${rP}}{${num*num}} ${sign} \\frac{${absIP}}{${num*num}}i$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Invert Fraction</span><br>The inverse $Z^{-1} = \\frac{4-3i}{${x}+3i}$.</div><div class="step-container"><span class="step-title">Step 2: Rationalize</span><br>Multiply numerator and denominator by conjugate $(${x}-3i)$. Expand and simplify using $i^2 = -1$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> અપૂર્ણાંક ઉલટાવો. પછી અંશ-છેદને છેદની અનુબદ્ધ કરણી વડે ગુણો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let configs = [
@@ -630,7 +701,7 @@
                         distractors: [`$${c.r}(\\cos ${c.d1} + i\\sin ${c.d1})$`, `$${c.d2}(\\cos ${c.t} + i\\sin ${c.t})$`, `$${c.r}(\\sin ${c.t} + i\\cos ${c.t})$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Find Modulus (r)</span><br>$r = \\sqrt{x^2+y^2}$.</div><div class="step-container"><span class="step-title">Step 2: Find Argument (θ)</span><br>$\\theta = \\tan^{-1}(y/x)$. Polar form is $r(\\cos\\theta + i\\sin\\theta)$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> $r = \\sqrt{x^2+y^2}$ શોધો. પછી કોણાંક $\\theta$ શોધી $r(\\cos\\theta + i\\sin\\theta)$ માં કિંમત મુકો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let target = rand(0, 2);
@@ -651,16 +722,17 @@
                         distractors: [`$${dist1}$`, `$${dist2}$`, `$${dist3}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Exponential Form</span><br>Convert to Euler form. Numerator: $e^{i(${a} \\times ${b})\\theta} \\cdot e^{i(-${c} \\times ${d})\\theta}$. Denominator: $e^{i(${e}\\times${f})\\theta}$. Use exponent rules to add/subtract powers. Resulting power is ${target}.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ઘાતાંકમાં ફેરવો અને આધાર સરખા હોવાથી ઘાતનો સરવાળો/બાદબાકી કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let x = rand(2, 9), y = rand(2, 9); let realPart = 2*x - y, imagPart = 2*y; 
+                    let x = rand(2, 9), y = rand(2, 9);
+                    let realPart = 2*x - y, imagPart = 2*y; 
                     return { 
                         en: `Find $x, y \\in \\mathbb{R}$ if $(2x-y) + 2yi = ${realPart} + ${imagPart}i$.`, gu: `જો $(2x-y) + 2yi = ${realPart} + ${imagPart}i$ હોય, તો વાસ્તવિક $x, y$ શોધો.`, 
                         correct: `$x = ${x}, y = ${y}$`, distractors: [`$x = ${y}, y = ${x}$`, `$x = ${x+1}, y = ${y}$`, `$x = -${x}, y = -${y}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Equate</span><br>Imaginary parts: $2y = ${imagPart} \\implies y = ${y}$. Real parts: $2x - y = ${realPart} \\implies x = ${x}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> કાલ્પનિક ભાગ અને વાસ્તવિક ભાગ સરખાવી x અને y ની કિંમત શોધો.</div>` 
-                    }; 
+                    };
                 }
             ]
         },
@@ -679,13 +751,13 @@
                     return { en: `$\\frac{d}{dx}(${t.f}) =$ ?`, gu: `$\\frac{d}{dx}(${t.f}) =$ ?`, correct: `$${t.a}$`, distractors: [`$${t.w1}$`, `$${t.w2}$`, `$0$`], solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Standard derivative formula.</div>`, solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રમાણિત સૂત્ર.</div>`};
                 },
                 () => { 
-                    let k = rand(2, 9); 
+                    let k = rand(2, 9);
                     return { 
                         en: `$\\frac{d}{dx}(\\sin ${k}x) =$ ?`, gu: `$\\frac{d}{dx}(\\sin ${k}x) =$ ?`, 
                         correct: `$${k}\\cos ${k}x$`, distractors: [`$\\cos ${k}x$`, `$-${k}\\cos ${k}x$`, `$\\frac{\\cos ${k}x}{${k}}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Chain Rule</span><br>Derivative of outer $\\sin(u)$ is $\\cos(u)$. Multiply by inner derivative $d(${k}x)/dx = ${k}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> સાંકળ નિયમ (Chain Rule) નો ઉપયોગ કરો.</div>`
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2, 9);
@@ -694,7 +766,7 @@
                         correct: `$0$`, distractors: [`$1$`, `$${k}$`, `$-1$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Identity</span><br>$\\sec^2 ${k}x - \\tan^2 ${k}x = 1$. The derivative of the constant 1 is 0.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ત્રિકોણમિતીય નિત્યસમ મુજબ આની કિંમત 1 થાય. અને અચળ પદનું વિકલન 0 થાય.</div>`
-                    }; 
+                    };
                 },
                 () => { 
                     let a = rand(2, 9);
@@ -703,12 +775,12 @@
                         correct: `$\\frac{1}{t}$`, distractors: [`$\\frac{1}{${a}t}$`, `$\\frac{t}{2}$`, `$t$` ], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Parametric Diff</span><br>$\\frac{dy}{dt} = ${2*a}$ and $\\frac{dx}{dt} = ${2*a}t$. $\\frac{dy}{dx} = \\frac{dy/dt}{dx/dt} = \\frac{${2*a}}{${2*a}t} = \\frac{1}{t}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રચલ સમીકરણોનું t સાપેક્ષે વિકલન કરો અને ગુણોત્તર લો.</div>`
-                    }; 
+                    };
                 }
             ],
             "examples": [
                 () => { 
-                    let c = rand(1, 50); 
+                    let c = rand(1, 50);
                     return { 
                         en: `Find the maximum and minimum values of $f(x) = 2x^3 - 3x^2 - 12x + ${c}$.`, 
                         gu: `વિધેય $f(x) = 2x^3 - 3x^2 - 12x + ${c}$ ની મહત્તમ અને ન્યૂનત્તમ કિંમત શોધો.`, 
@@ -728,8 +800,8 @@
                     } 
                 },
                 () => { 
-                    let a = rand(1, 4), b = rand(2, 7), t = rand(2, 4); 
-                    let v = 3*a*t*t - 2*b*t; let acc = 6*a*t - 2*b; 
+                    let a = rand(1, 4), b = rand(2, 7), t = rand(2, 4);
+                    let v = 3*a*t*t - 2*b*t; let acc = 6*a*t - 2*b;
                     return { 
                         en: `Particle motion is $S = ${a}t^3 - ${b}t^2 + 5t$. Find velocity and acceleration at $t = ${t}$ sec.`, 
                         gu: `કણની ગતિ $S = ${a}t^3 - ${b}t^2 + 5t$ છે. $t = ${t}$ સેકન્ડે તેનો વેગ અને પ્રવેગ શોધો.`, 
@@ -737,7 +809,7 @@
                         distractors: [`Vel = $${v}$, Acc = $${acc+2}$`, `Vel = $${v - 5}$, Acc = $${acc}$`, `Vel = $${3*a*t - 2*b + 5}$, Acc = $${acc-1}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Derivatives</span><br>Velocity $V = \\frac{dS}{dt} = ${3*a}t^2 - ${2*b}t + 5$. Acceleration $A = \\frac{dV}{dt} = ${6*a}t - ${2*b}$. Substitute $t=${t}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> વેગ માટે પ્રથમ વિકલન અને પ્રવેગ માટે દ્વિતીય વિકલન કરી $t=${t}$ મુકો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2,5);
@@ -746,16 +818,16 @@
                         correct: `$\\frac{${2*k}\\sec^2 x}{(${k}-\\tan x)^2}$`, distractors: [`$\\frac{\\sec^2 x}{(${k}-\\tan x)^2}$`, `$\\frac{${k}+\\sec^2 x}{(${k}-\\tan x)^2}$`, `$\\frac{-${2*k}\\sec^2 x}{(${k}+\\tan x)^2}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Quotient Rule</span><br>Use $\\frac{v u' - u v'}{v^2}$. Numerator computes to $${2*k}\\sec^2 x$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ભાગાકારના નિયમનો ઉપયોગ કરો. અંશ $${2*k}\\sec^2 x$ બનશે.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
-                    let r = rand(2, 9); 
+                    let r = rand(2, 9);
                     return { 
                         en: `If $x^2 + y^2 = ${r*r}$, find $\\frac{dy}{dx}$.`, gu: `જો $x^2 + y^2 = ${r*r}$ હોય, તો $\\frac{dy}{dx}$ શોધો.`, 
                         correct: `$-\\frac{x}{y}$`, distractors: [`$\\frac{x}{y}$`, `$-\\frac{y}{x}$`, `$\\frac{y}{x}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Implicit Diff</span><br>$2x + 2y \\frac{dy}{dx} = 0 \\implies \\frac{dy}{dx} = -\\frac{x}{y}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> બંને બાજુ વિકલન કરતા: $2x + 2y \\frac{dy}{dx} = 0$.</div>` 
-                    }; 
+                    };
                 }
             ]
         },
@@ -774,13 +846,14 @@
                     return { en: `$\\int ${t.f} dx =$ ?`, gu: `$\\int ${t.f} dx =$ ?`, correct: `$${t.a} + C$`, distractors: [`$${t.f} + C$`, `$0$`, `$1 + C$`], solEn: `<div class="step-container"><span class="step-title">Step 1:</span> Standard integration formula.</div>`, solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રમાણિત સંકલન સૂત્ર.</div>`};
                 },
                 () => { 
-                    let a = rand(1, 9); let p = [3, 5, 7][rand(0, 2)];
+                    let a = rand(1, 9);
+                    let p = [3, 5, 7][rand(0, 2)];
                     return { 
                         en: `$\\int_{-${a}}^{${a}} x^${p} dx =$ ?`, gu: `$\\int_{-${a}}^{${a}} x^${p} dx =$ ?`, 
                         correct: `$0$`, distractors: [`$\\frac{${Math.pow(a, p+1)}}{${p+1}}$`, `$${Math.pow(a, p+1)}$`, `$-\\frac{${Math.pow(a, p+1)}}{${p+1}}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Property</span><br>The definite integral of any odd function over a symmetric interval $[-a, a]$ is exactly 0.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> અયુગ્મ વિધેય હોવાથી સંમિત અંતરાલ માં સંકલન 0 થાય.</div>`
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2,6);
@@ -789,12 +862,12 @@
                         correct: `$e^x x^{${k}} + C$`, distractors: [`$e^x (${k}x^{${k-1}}) + C$`, `$e^x (x^{${k}} - ${k}x^{${k-1}}) + C$`, `$x^{${k}} + C$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Property</span><br>Use identity: $\\int e^x [f(x) + f'(x)] dx = e^x f(x) + C$. Here $f(x) = x^{${k}}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> પ્રમાણિત નિયમ મુજબ જવાબ $e^x f(x)$ આવે.</div>`
-                    }; 
+                    };
                 }
             ],
             "examples": [
                 () => { 
-                    let a = rand(1, 4), b = rand(5, 8); 
+                    let a = rand(1, 4), b = rand(5, 8);
                     let ansNum = Math.pow(b, 3) - Math.pow(a, 3); 
                     return { 
                         en: `Find the area bounded by curve $y = x^2$, X-axis, and lines $x = ${a}$, $x = ${b}$.`, 
@@ -802,7 +875,7 @@
                         correct: `$\\frac{${ansNum}}{3}$`, distractors: [`$\\frac{${ansNum+2}}{3}$`, `$\\frac{${ansNum-1}}{2}$`, `$${ansNum}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Definite Integral</span><br>Area $= \\int_{${a}}^{${b}} x^2 dx = [\\frac{x^3}{3}]_{${a}}^{${b}} = \\frac{${b}^3}{3} - \\frac{${a}^3}{3} = \\frac{${ansNum}}{3}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> નિયત સંકલન $\\int_{${a}}^{${b}} x^2 dx$ ની ગણતરી કરો. કિંમતો મુકી બાદબાકી કરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(1, 7);
@@ -812,7 +885,7 @@
                         correct: `$\\frac{\\pi}{4}$`, distractors: [`$\\frac{\\pi}{2}$`, `$1$`, `$0$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Property</span><br>Let $I$ be the integral. Use property $\\int_0^a f(x)dx = \\int_0^a f(a-x)dx$. Add the equations to get $2I = \\int_0^{\\pi/2} 1 dx = \\pi/2$. Thus $I = \\pi/4$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ગુણધર્મનો ઉપયોગ કરતા $2I = \\pi/2$, તેથી $I = \\pi/4$.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2, 6);
@@ -832,14 +905,14 @@
                         correct: `Use Partial Fractions $\\frac{A}{x+1} + \\frac{B}{x-2}$`, distractors: [`Use Substitution $t = (x+1)(x-2)$`, `Use By Parts directly`, `Integration not possible`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Partial Fractions</span><br>Set fraction equal to $\\frac{A}{x+1} + \\frac{B}{x-2}$. Solve for A and B. Then integrate each part to get log functions.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> આંશિક અપૂર્ણાંક ની રીત વાપરી A અને B શોધો અને લઘુગણક માં સંકલન કરો.</div>` 
-                    }; 
+                    };
                 }
             ]
         },
         "diffeq": {
             "mcq": [
                 () => { 
-                    let o1 = rand(2, 6), p1 = rand(2, 6), o2 = o1 - 1, p2 = p1 + 2; 
+                    let o1 = rand(2, 6), p1 = rand(2, 6), o2 = o1 - 1, p2 = p1 + 2;
                     return { 
                         en: `Order of DE $\\left(\\frac{d^{${o1}}y}{dx^{${o1}}}\\right)^{${p1}} + \\left(\\frac{d^{${o2}}y}{dx^{${o2}}}\\right)^{${p2}} = 0$ is:`, 
                         gu: `વિકલ સમીકરણ $\\left(\\frac{d^{${o1}}y}{dx^{${o1}}}\\right)^{${p1}} + \\dots = 0$ ની કક્ષા શું છે?`, 
@@ -856,17 +929,17 @@
                         correct: `Not Defined`, distractors: [`$1$`, `$${k}$`, `$0$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Definition</span><br>Degree is not defined because the derivative is inside a transcendental function (sine).</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> વિકલન ત્રિકોણમિતીય વિધેયમાં હોવાથી પરિમાણ અવ્યાખ્યાયિત છે.</div>`
-                    }; 
+                    };
                 },
                 () => { 
-                    let k = rand(2, 9); 
+                    let k = rand(2, 9);
                     return { 
                         en: `Integrating Factor of $\\frac{dy}{dx} + ${k}y = e^x$ is:`, 
                         gu: `$\\frac{dy}{dx} + ${k}y = e^x$ નો સંકલ્યકારક અવયવ (I.F.):`, 
                         correct: `$e^{${k}x}$`, distractors: [`$e^{x}$`, `$e^{-${k}x}$`, `$${k}e^x$`], 
-                        solEn: `<div class="step-container"><span class="step-title">Step 1: Formula</span><br>I.F. $= e^{\\int P dx}$. Here $P = ${k}$, so I.F. $= e^{\\int ${k} dx} = e^{${k}x}$.</div>`, 
+                        solEn: `<div class="step-container"><span class="step-title">Step 1: Formula</span><br>I.F. = e^{\\int P dx}. Here $P = ${k}$, so I.F. = e^{\\int ${k} dx} = e^{${k}x}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> I.F. ના સૂત્ર $e^{\\int P dx}$ મુજબ.</div>`
-                    }; 
+                    };
                 }
             ],
             "examples": [
@@ -878,7 +951,7 @@
                         correct: `$\\frac{y^{${1-b}}}{${1-b}} + \\frac{x^{${1-a}}}{${1-a}} = C$`, distractors: [`$x^{${a}}y^{${b}} = C$`, `$x^{${a+1}} + y^{${b+1}} = C$`, `$x/y = C$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Variable Separable</span><br>Divide by $x^{${a}}y^{${b}}$: $y^{-${b}}dy + x^{-${a}}dx = 0$. Integrate using power rule.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> ચલ અલગ કરી સંકલન કરતા જવાબ મળે.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2,5);
@@ -886,9 +959,9 @@
                         en: `Solve Linear DE: $\\frac{dy}{dx} + \\frac{y}{x} = x^{${k}}$.`, 
                         gu: `સુરેખ વિકલ સમીકરણ ઉકેલો: $\\frac{dy}{dx} + \\frac{y}{x} = x^{${k}}$.`, 
                         correct: `$xy = \\frac{x^{${k+2}}}{${k+2}} + C$`, distractors: [`$y/x = \\frac{x^{${k+1}}}{${k+1}} + C$`, `$xy = \\frac{x^{${k+1}}}{${k+1}} + C$`, `$xy = x^{${k+2}} + C$`], 
-                        solEn: `<div class="step-container"><span class="step-title">Step 1: Integrating Factor</span><br>I.F. $= e^{\\int (1/x) dx} = x$. Solution: $y \\times (I.F.) = \\int Q \\times (I.F.) dx \\implies xy = \\int x^{${k+1}} dx$.</div>`, 
+                        solEn: `<div class="step-container"><span class="step-title">Step 1: Integrating Factor</span><br>I.F. = e^{\\int (1/x) dx} = x$. Solution: $y \\times (I.F.) = \\int Q \\times (I.F.) dx \\implies xy = \\int x^{${k+1}} dx$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> I.F. શોધો અને સુરેખ સમીકરણ ના સૂત્રમાં વાપરો.</div>` 
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2,5);
@@ -906,13 +979,13 @@
         "statistics": {
             "mcq": [
                 () => { 
-                    let n = rand(5, 99); 
+                    let n = rand(5, 99);
                     return { 
                         en: `The mean of the first ${n} natural numbers is:`, gu: `પ્રથમ ${n} પ્રાકૃતિક સંખ્યાઓનો મધ્યક શું છે?`, 
                         correct: `$${(n+1)/2}$`, distractors: [`$${n/2}$`, `$${n}$`, `$${(n+2)/2}$`], 
                         solEn: `<div class="step-container"><span class="step-title">Step 1: Use Formula</span><br>The sum of the first $n$ natural numbers is $\\frac{n(n+1)}{2}$. To find the mean, divide by $n$. The simplified formula is always $\\frac{n+1}{2}$.<br>For $n=${n}, Mean = $\\frac{${n}+1}{2} = ${(n+1)/2}$.</div>`, 
                         solGu: `<div class="step-container"><span class="step-title">પગલું 1:</span> સૂત્ર $\\frac{n+1}{2}$ વાપરો.</div>`
-                    }; 
+                    };
                 },
                 () => { 
                     let k = rand(2, 50);
@@ -1023,7 +1096,7 @@
 
         startTimer();
 
-        const numQuestions = type === 'mcq' ? 20 : 15; 
+        const numQuestions = type === 'mcq' ? 20 : 15;
         const availableGenerators = generators[topic][type]; 
 
         let generatorIndex = 0;
@@ -1033,7 +1106,6 @@
             let options;
             let attempts = 0;
             let isDuplicate = true;
-
             // Safe loop to prevent infinite freezing
             while (isDuplicate && attempts < 500) {
                 const genFunc = availableGenerators[(generatorIndex + attempts) % availableGenerators.length];
@@ -1047,7 +1119,6 @@
                 }
                 
                 let uniqueOptionTexts = new Set(rawOptions.map(o => String(o.text).trim()));
-                
                 if (textExists || uniqueOptionTexts.size !== 4) {
                     isDuplicate = true;
                     attempts++;
@@ -1113,6 +1184,24 @@
     }
 
     function gradeQuiz() {
+        // --- NEW: Validate Student Details on Submit ---
+        const nameInput = document.getElementById('studentName');
+        const enrollInput = document.getElementById('enrollmentNo');
+        const nameVal = nameInput.value.trim();
+        const enrollVal = enrollInput.value.trim();
+
+        if (!/^[A-Za-z\s]+$/.test(nameVal)) {
+            alert("Please enter a valid Name (Only alphabets and spaces are allowed).\n(કૃપા કરીને માન્ય નામ દાખલ કરો.)");
+            nameInput.focus();
+            return;
+        }
+        if (!/^\d{12}$/.test(enrollVal)) {
+            alert("Please enter a valid Enrollment No. (Exactly 12 digits are required).\n(કૃપા કરીને બરાબર 12 આંકડાનો એનરોલમેન્ટ નંબર દાખલ કરો.)");
+            enrollInput.focus();
+            return;
+        }
+        // -----------------------------------------------
+
         let score = 0;
         let answeredAll = true;
 
@@ -1147,6 +1236,16 @@
             const inputs = document.querySelectorAll(`input[name="q${i}"]`);
             inputs.forEach(input => input.disabled = true);
         });
+
+        // --- NEW: Generate Timestamp & Lock Inputs ---
+        const now = new Date();
+        const timestampStr = now.toLocaleString('en-IN'); 
+        document.getElementById('test-timestamp').innerText = timestampStr;
+        document.getElementById('timestamp-group').style.display = 'flex';
+        
+        nameInput.disabled = true;
+        enrollInput.disabled = true;
+        // ---------------------------------------------
 
         const percentage = Math.round((score / currentQuizData.length) * 100);
         let feedbackMsg = "";
