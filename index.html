@@ -59,6 +59,31 @@
         @media(max-width: 768px) { body { padding: 10px; padding-bottom: 110px; } .container { padding: 15px; } .options { grid-template-columns: 1fr; } .footer { flex-direction: column; text-align: center; gap: 8px; } }
         @media(min-width: 769px) { .action-buttons-container { flex-direction: row; } }
         @media print { body { background: #fff; padding: 0; color: #000; } .container { box-shadow: none; margin: 0; padding: 0; } .controls, .action-buttons-container, .footer, #timer-display { display: none !important; } .question-block { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; } }
+    /* Footer Styles */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: #0F172A;
+            color: #9CA3AF;
+            border-top: 4px solid #2563EB;
+            font-size: 0.95rem;
+            margin-top: 3rem;
+        }
+        .page-footer .counters-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .page-footer .copyright {
+            text-align: right;
+            line-height: 1.5;
+        }
+        @media (max-width: 768px) { 
+            .page-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .page-footer .copyright { text-align: center; }
+        }
     </style>
 </head>
 <body>
